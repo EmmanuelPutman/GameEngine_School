@@ -32,5 +32,8 @@
     <ClInclude Include="..\EP_Engine\EP_Engine_PCH.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="GameCommands.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
