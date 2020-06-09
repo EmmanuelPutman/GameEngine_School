@@ -9,8 +9,8 @@ namespace ep
 	class TextObject final : public SceneObject
 	{
 	public:
-		void Update() override;
-		void Render() const override;
+		void Update(const GameTime& gameTime) override;
+		void Render(const GameTime& gameTime) const override;
 
 		void SetText(const std::string& text);
 		void SetPosition(float x, float y);

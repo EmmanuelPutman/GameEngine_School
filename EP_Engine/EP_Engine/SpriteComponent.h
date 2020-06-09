@@ -8,14 +8,14 @@ namespace ep {
 	class Texture2D;
 }
 
-class RenderComponent :	public Component
+class SpriteComponent :	public ep::Component
 {
 public:
-	RenderComponent() { m_pTexture = nullptr; m_PosX = 0.f; m_PosY = 0.f; };
-	~RenderComponent() override;
+	SpriteComponent() { m_pTexture = nullptr; m_PosX = 0.f; m_PosY = 0.f; };
+	~SpriteComponent() override;
 
-	void Update() override;
-	void Render() override;
+	void Update(const GameTime& gameTime) override;
+	void Render(const GameTime& gameTime) override;
 	void SetTexture(const std::string& filename);
 	void SetPosition(float x, float y);
 

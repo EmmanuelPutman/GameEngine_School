@@ -26,7 +26,7 @@ FontComponent::~FontComponent()
 	SafeDelete(m_pFont);
 }
 
-void FontComponent::Update()
+void FontComponent::Update(const GameTime&)
 {
 	if(m_IsVarChanged)
 	{ 
@@ -35,7 +35,7 @@ void FontComponent::Update()
 	}
 }
 
-void FontComponent::Render()
+void FontComponent::Render(const GameTime&)
 {
 	if (m_pTexture != nullptr)
 	{ 
@@ -81,5 +81,8 @@ void FontComponent::TextureCreation()
 		throw std::runtime_error(std::string("Create text texture from surface failed: ") + SDL_GetError());
 	}
 	SDL_FreeSurface(surf);
+
+	//If not deleted and set to nullptr, this gives memory leaks and throws an exception
+	SafeDelete(m_pTexture);
 	m_pTexture = new ep::Texture2D(texture);
 }

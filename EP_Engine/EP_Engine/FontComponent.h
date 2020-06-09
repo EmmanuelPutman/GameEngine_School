@@ -8,14 +8,14 @@ namespace ep {
 	class Font;
 }
 
-class FontComponent : public Component
+class FontComponent : public ep::Component
 {
 public:
 	FontComponent(const std::string& fontName, unsigned int size, const std::string& text);
 	~FontComponent();
 	
-	void Update() override;
-	void Render() override;
+	void Update(const GameTime& gameTime) override;
+	void Render(const GameTime& gameTime) override;
 
 	void SetText(const std::string& text);
 	void SetFont(const std::string& fontName, const unsigned int size);

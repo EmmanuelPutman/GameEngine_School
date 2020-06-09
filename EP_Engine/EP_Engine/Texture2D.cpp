@@ -7,6 +7,7 @@ ep::Texture2D::~Texture2D()
 	SDL_DestroyTexture(m_Texture);
 }
 
+
 SDL_Texture* ep::Texture2D::GetSDLTexture() const
 {
 	return m_Texture;

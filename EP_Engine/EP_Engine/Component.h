@@ -1,15 +1,27 @@
 #pragma once
-class Component
+
+class TransformComponent;
+
+namespace ep
 {
-public:
-	Component() = default;
-	virtual ~Component() = default;
+	class GameObject;
 
-	virtual void Update() = 0;
-	virtual void Render() = 0;
+	class Component
+	{
 
-protected:
+	public:
+		Component();
+		virtual ~Component() = default;
 
-};
+		virtual void Update(const GameTime& gameTime) = 0;
+		virtual void Render(const GameTime& gameTime) = 0;
+
+		GameObject* m_pGameObject;
+
+	protected:
+		TransformComponent* GetTransform() const;
+
+	};
+}
 
 

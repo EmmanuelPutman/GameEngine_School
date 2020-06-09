@@ -6,11 +6,11 @@ TransformComponent::TransformComponent()
 {
 }
 
-void TransformComponent::Update()
+void TransformComponent::Update(const GameTime&)
 {
 }
 
-void TransformComponent::Render()
+void TransformComponent::Render(const GameTime&)
 {
 }
 

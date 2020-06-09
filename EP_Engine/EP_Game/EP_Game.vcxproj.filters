@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="BubbleBobble">
+      <UniqueIdentifier>{fc1472fc-f0e3-4e63-b331-db701ca9f9ab}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\EP_Engine\Main.cpp">
@@ -24,6 +27,9 @@
     <ClCompile Include="..\EP_Engine\EP_Engine_PCH.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="BubbleBobble_Game.cpp">
+      <Filter>BubbleBobble</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\EP_Engine\EP_Engine.h">
@@ -34,6 +40,9 @@
     </ClInclude>
     <ClInclude Include="GameCommands.h">
       <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BubbleBobble_Game.h">
+      <Filter>BubbleBobble</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

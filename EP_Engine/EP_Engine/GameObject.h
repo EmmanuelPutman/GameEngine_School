@@ -1,22 +1,23 @@
 #pragma once
 #include "Transform.h"
 #include "SceneObject.h"
-class Component;
 
 namespace ep
 {
+	class Component;
 	class Texture2D;
+
 	class GameObject : public SceneObject
 	{
 	public:
-		void Update() override;
-		void Render() const override;
+		void Update(const GameTime& gameTime) override;
+		void Render(const GameTime& gameTime) const override;
 
 		void SetTexture(const std::string& filename);
 		void SetPosition(float x, float y);
 
 		template<class T>
-		T GetComponent();
+		T* GetComponent();
 
 		void AddComponent(Component* component);
 
@@ -34,17 +35,15 @@ namespace ep
 	};
 
 	template<class T>
-	inline T GameObject::GetComponent()
+	inline T* GameObject::GetComponent()
 	{
 		for (auto component : m_pComponents)
 		{
-			if(typeid(component) == typeid(T))
-				return component;
+			if(component != nullptr && typeid(*component) == typeid(T))
+				return static_cast<T*>(component);
 		}
+
+		return nullptr;
 	}
 
-	inline void GameObject::AddComponent(Component* component)
-	{
-		m_pComponents.push_back(component);
-	}
 }

@@ -178,6 +178,7 @@
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">EP_Engine_PCH.h</PrecompiledHeaderFile>
     </ClCompile>
     <ClCompile Include="..\EP_Engine\Main.cpp" />
+    <ClCompile Include="BubbleBobble_Game.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\EP_Engine\EP_Engine.vcxproj">
@@ -187,6 +188,7 @@
   <ItemGroup>
     <ClInclude Include="..\EP_Engine\EP_Engine.h" />
     <ClInclude Include="..\EP_Engine\EP_Engine_PCH.h" />
+    <ClInclude Include="BubbleBobble_Game.h" />
     <ClInclude Include="GameCommands.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

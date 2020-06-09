@@ -6,12 +6,12 @@ namespace ep
 	class SceneObject;
 	class Scene
 	{
-		friend ep::Scene& SceneManager::CreateScene(const std::string& name);
+		friend ep::Scene* SceneManager::CreateScene(const std::string& name);
 	public:
 		void Add(SceneObject* object);
 
-		void Update();
-		void Render() const;
+		void Update(const GameTime& gameTime);
+		void Render(const GameTime& gameTime) const;
 
 		SceneObject* GetSceneObject();
 

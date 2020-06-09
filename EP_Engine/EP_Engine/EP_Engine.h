@@ -2,6 +2,7 @@
 struct SDL_Window;
 
 class FontComponent;
+class BubbleBobble_Game;
 
 namespace ep
 {
@@ -16,7 +17,9 @@ namespace ep
 	private:
 		static const int MsPerFrame = 16; //16 for 60 fps, 33 for 30 fps
 		SDL_Window* m_Window{};
-		FontComponent* m_pFpsFont;
+
+		GameTime m_GameTime;
+		BubbleBobble_Game* m_Game;
 	};
 }
 

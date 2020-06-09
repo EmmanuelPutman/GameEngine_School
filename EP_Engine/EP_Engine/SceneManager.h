@@ -7,13 +7,17 @@ namespace ep
 	class SceneManager final : public Singleton<SceneManager>
 	{
 	public:
-		Scene& CreateScene(const std::string& name);
-		void Update();
-		void Render();
-	private:
-		friend class Singleton<SceneManager>;
 		SceneManager() = default;
 		~SceneManager();
+		SceneManager(const SceneManager&) = delete;
+		SceneManager(SceneManager&&) = delete;
+		SceneManager& operator= (const SceneManager&) = delete;
+		SceneManager& operator= (const SceneManager&&) = delete;
+
+		Scene* CreateScene(const std::string& name);
+		void Update(const GameTime& gameTime);
+		void Render(const GameTime& gameTime);
+	private:
 		std::vector<Scene*> m_Scenes;
 	};
 }

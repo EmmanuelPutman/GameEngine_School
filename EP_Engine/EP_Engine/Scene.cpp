@@ -19,19 +19,19 @@ void ep::Scene::Add(SceneObject* object)
 	m_Objects.push_back(object);
 }
 
-void ep::Scene::Update()
+void ep::Scene::Update(const GameTime& gameTime)
 {
 	for(auto& object : m_Objects)
 	{
-		object->Update();
+		object->Update(gameTime);
 	}
 }
 
-void ep::Scene::Render() const
+void ep::Scene::Render(const GameTime& gameTime) const
 {
 	for (const auto& object : m_Objects)
 	{
-		object->Render();
+		object->Render(gameTime);
 	}
 }
 

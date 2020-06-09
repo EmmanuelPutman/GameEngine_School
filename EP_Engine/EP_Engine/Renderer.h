@@ -3,6 +3,7 @@
 
 struct SDL_Window;
 struct SDL_Renderer;
+struct SDL_Rect;
 
 namespace ep
 {
@@ -14,11 +15,14 @@ namespace ep
 	{
 	public:
 		void Init(SDL_Window* window);
-		void Render() const;
+		void Render(const GameTime& gameTime) const;
 		void Destroy();
 
 		void RenderTexture(const Texture2D& texture, float x, float y) const;
 		void RenderTexture(const Texture2D& texture, float x, float y, float width, float height) const;
+
+		void RenderTexture(const Texture2D& texture, SDL_Rect dst, SDL_Rect src) const;
+		//void RenderTexture(const Texture2D& texture, float x, float y, float width, float height, float sourceW, float sourceH) const;
 
 		SDL_Renderer* GetSDLRenderer() const { return m_Renderer; }
 	private:

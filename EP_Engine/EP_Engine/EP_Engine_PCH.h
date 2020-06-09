@@ -24,3 +24,9 @@ inline void SafeDelete(T& pointer)
 		pointer = nullptr;
 	}
 }
+
+struct GameTime
+{
+	int FPS;
+	float elapsedSec;
+};

@@ -13,11 +13,11 @@ void ep::Renderer::Init(SDL_Window * window)
 	}
 }
 
-void ep::Renderer::Render() const
+void ep::Renderer::Render(const GameTime& gameTime) const
 {
 	SDL_RenderClear(m_Renderer);
 
-	SceneManager::GetInstance().Render();
+	SceneManager::GetInstance().Render(gameTime);
 	
 	SDL_RenderPresent(m_Renderer);
 }
@@ -48,4 +48,9 @@ void ep::Renderer::RenderTexture(const Texture2D& texture, const float x, const 
 	dst.w = static_cast<int>(width);
 	dst.h = static_cast<int>(height);
 	SDL_RenderCopy(GetSDLRenderer(), texture.GetSDLTexture(), nullptr, &dst);
+}
+
+void ep::Renderer::RenderTexture(const Texture2D& texture, SDL_Rect dst, SDL_Rect src) const
+{
+	SDL_RenderCopy(GetSDLRenderer(), texture.GetSDLTexture(), &src, &dst);
 }

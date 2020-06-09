@@ -4,8 +4,8 @@ namespace ep
 	class SceneObject
 	{
 	public:
-		virtual void Update() = 0;
-		virtual void Render() const = 0;
+		virtual void Update(const GameTime& gameTime) = 0;
+		virtual void Render(const GameTime& gameTime) const = 0;
 
 		SceneObject() = default;
 		virtual ~SceneObject() = default;

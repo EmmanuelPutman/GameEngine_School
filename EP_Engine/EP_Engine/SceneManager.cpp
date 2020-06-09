@@ -1,20 +1,21 @@
+#include "SceneManager.h"
 #include "EP_Engine_PCH.h"
 #include "SceneManager.h"
 #include "Scene.h"
 
-void ep::SceneManager::Update()
+void ep::SceneManager::Update(const GameTime& gameTime)
 {
 	for(auto& scene : m_Scenes)
 	{
-		scene->Update();
+		scene->Update(gameTime);
 	}
 }
 
-void ep::SceneManager::Render()
+void ep::SceneManager::Render(const GameTime& gameTime)
 {
 	for (const auto& scene : m_Scenes)
 	{
-		scene->Render();
+		scene->Render(gameTime);
 	}
 }
 
@@ -26,9 +27,10 @@ ep::SceneManager::~SceneManager()
 	}
 }
 
-ep::Scene& ep::SceneManager::CreateScene(const std::string& name)
+ep::Scene* ep::SceneManager::CreateScene(const std::string& name)
 {
-	const auto scene = new Scene(name);
+	auto scene = new Scene(name);
 	m_Scenes.push_back(scene);
-	return *scene;
+	return scene;
 }
+

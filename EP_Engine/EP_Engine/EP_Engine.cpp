@@ -11,10 +11,12 @@
 #include "ResourceManager.h"
 #include "GameObject.h"
 #include "Scene.h"
+#include "../EP_Game/BubbleBobble_Game.h"
 
 #include "TransformComponent.h"
-#include "RenderComponent.h"
+#include "SpriteComponent.h"
 #include "FontComponent.h"
+#include "FpsComponent.h"
 
 
 using namespace std;
@@ -22,6 +24,7 @@ using namespace std::chrono;
 
 ep::EP_Engine::~EP_Engine()
 {
+	SafeDelete(m_Game);
 }
 
 void ep::EP_Engine::Initialize()
@@ -45,12 +48,14 @@ void ep::EP_Engine::Initialize()
 	}
 
 	Renderer::GetInstance().Init(m_Window);
+
+	m_GameTime = GameTime();
 }
 
 void ep::EP_Engine::LoadGame()
 {
-	auto& scene = SceneManager::GetInstance().CreateScene("Test");
-
+	/*
+	auto scene = SceneManager::GetInstance().CreateScene("Test");
 	GameObject* gameObject = new GameObject();
 	//Transformcomponent
 	TransformComponent* transform = new TransformComponent();
@@ -62,7 +67,7 @@ void ep::EP_Engine::LoadGame()
 	render->SetPosition(transform->GetPosition().x, transform->GetPosition().y);
 	gameObject->AddComponent(render);
 	//GameObject
-	scene.Add(gameObject);
+	scene->Add(gameObject);
 	
 
 	gameObject = new GameObject();
@@ -76,7 +81,7 @@ void ep::EP_Engine::LoadGame()
 	render->SetPosition(transform->GetPosition().x, transform->GetPosition().y);
 	gameObject->AddComponent(render);
 	//adding a 2nd gameobject
-	scene.Add(gameObject);
+	scene->Add(gameObject);
 
 
 	gameObject = new GameObject();
@@ -92,7 +97,7 @@ void ep::EP_Engine::LoadGame()
 	font->SetPosition(transform->GetPosition().x, transform->GetPosition().y);
 	gameObject->AddComponent(font);
 	//GameObject adding text1
-	scene.Add(gameObject);
+	scene->Add(gameObject);
 
 	gameObject = new GameObject();
 	//TransformComponent text1
@@ -100,14 +105,14 @@ void ep::EP_Engine::LoadGame()
 	transform->ChangePositionTo(0.f, 0.f, 0.f);
 	gameObject->AddComponent(transform);
 	//FontComponent text1
-	m_pFpsFont = new FontComponent("Lingua.otf", 22, "00 FPS");
-	//font->SetFont("Lingua.otf", 36);
-	//font->SetText("00 FPS");
-	m_pFpsFont->SetColor(255.f, 255.f, 0.f, 255.f);
-	m_pFpsFont->SetPosition(transform->GetPosition().x, transform->GetPosition().y);
-	gameObject->AddComponent(m_pFpsFont);
+	FpsComponent* fpsComponent = new FpsComponent("Lingua.otf", 26, "00");
+	gameObject->AddComponent(fpsComponent);
+
 	//GameObject adding text1
-	scene.Add(gameObject);
+	scene->Add(gameObject);
+	*/
+
+	m_Game = new BubbleBobble_Game();
 }
 
 void ep::EP_Engine::CleanUp()
@@ -134,7 +139,7 @@ void ep::EP_Engine::Run()
 
 		bool doContinue = true;
 		auto previousTime = high_resolution_clock::now();
-		float timeBehind{};
+		float timeBehind{ 0.f };
 		while (doContinue)
 		{
 			int nrOfFrames{};
@@ -145,17 +150,20 @@ void ep::EP_Engine::Run()
 
 			doContinue = input.ProcessInput();
 
+			m_GameTime.elapsedSec = elapsed;
 
-			while (timeBehind >= MsPerFrame)
-			{
+			//while (timeBehind >= MsPerFrame)
+			//{
 				++nrOfFrames;
-				sceneManager.Update();
-				m_pFpsFont->SetText(std::to_string(int(nrOfFrames / elapsed)) + " FPS");
+				m_GameTime.FPS = int(nrOfFrames / elapsed);
+				sceneManager.Update(m_GameTime);
+
+				m_Game->Update(m_GameTime);
 
 				timeBehind -= MsPerFrame;
-			}
+			//}
 
-			renderer.Render();
+			renderer.Render(m_GameTime);
 
 		}
 	}
