@@ -40,7 +40,7 @@ namespace ep
 		InputManager& operator= (const InputManager&&) = delete;
 
 		bool ProcessInput();
-		void HandleInput();
+		void HandleInput(const GameTime& gameTime);
 		bool IsPressed(ControllerButton btnPressed) const;
 		bool IsPressed(KeyboardKey btnPressed) const;
 		void SetCommandToButton(ControllerButton button, Command* cmd);

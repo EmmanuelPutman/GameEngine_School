@@ -16,6 +16,9 @@ public:
 	void Update(const GameTime& gameTime) override;
 	void Render(const GameTime& gameTime) override;
 
+	int GetFrameWidth() const;
+	int GetFrameHeight() const;
+
 private:
 	float m_SpriteSwapAfter;
 	float m_Timer;

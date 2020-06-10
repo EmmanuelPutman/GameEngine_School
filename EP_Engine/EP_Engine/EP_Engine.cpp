@@ -50,6 +50,8 @@ void ep::EP_Engine::Initialize()
 	Renderer::GetInstance().Init(m_Window);
 
 	m_GameTime = GameTime();
+	m_GameTime.WindowWidth = 640;
+	m_GameTime.WindowHeight = 480;
 }
 
 void ep::EP_Engine::LoadGame()
@@ -112,7 +114,7 @@ void ep::EP_Engine::LoadGame()
 	scene->Add(gameObject);
 	*/
 
-	m_Game = new BubbleBobble_Game();
+	m_Game = new BubbleBobble_Game(m_GameTime);
 }
 
 void ep::EP_Engine::CleanUp()
@@ -140,11 +142,14 @@ void ep::EP_Engine::Run()
 		bool doContinue = true;
 		auto previousTime = high_resolution_clock::now();
 		float timeBehind{ 0.f };
+
+		int maxSkipFrames{ 2 }; // 60fps / 2 = 30fps (The min. I want to run my engine at)
 		while (doContinue)
 		{
 			int nrOfFrames{};
 			const auto currentTime = high_resolution_clock::now();
 			float elapsed = duration<float>(currentTime - previousTime).count();
+			
 			previousTime = currentTime;
 			timeBehind += elapsed;
 
@@ -152,16 +157,18 @@ void ep::EP_Engine::Run()
 
 			m_GameTime.elapsedSec = elapsed;
 
-			//while (timeBehind >= MsPerFrame)
-			//{
+			while (timeBehind < MsPerFrame && nrOfFrames < maxSkipFrames)
+			{
 				++nrOfFrames;
 				m_GameTime.FPS = int(nrOfFrames / elapsed);
 				sceneManager.Update(m_GameTime);
 
 				m_Game->Update(m_GameTime);
 
+				input.HandleInput(m_GameTime);
+
 				timeBehind -= MsPerFrame;
-			//}
+			}
 
 			renderer.Render(m_GameTime);
 

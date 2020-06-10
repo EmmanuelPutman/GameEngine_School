@@ -9,6 +9,7 @@ public:
 	void Render(const GameTime& gameTime) override;
 
 	void ChangePositionTo(float x, float y, float z);
+	void AddToPosition(float x, float y, float z);
 	const glm::vec3& GetPosition() const;
 
 private:

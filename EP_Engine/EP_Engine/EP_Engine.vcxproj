@@ -201,6 +201,8 @@ xcopy "$(SolutionDir)3rdParty\FMOD\lib\x64\fmodL.dll" "$(OutputPath)" /R /Y</Com
     <ClCompile Include="ApplicationManager.cpp" />
     <ClCompile Include="Audio.cpp" />
     <ClCompile Include="AudioManager.cpp" />
+    <ClCompile Include="ColliderComponent.cpp" />
+    <ClCompile Include="CollisionManager.cpp" />
     <ClCompile Include="Command.cpp" />
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="EP_Engine_PCH.cpp">
@@ -233,6 +235,8 @@ xcopy "$(SolutionDir)3rdParty\FMOD\lib\x64\fmodL.dll" "$(OutputPath)" /R /Y</Com
     <ClInclude Include="ApplicationManager.h" />
     <ClInclude Include="Audio.h" />
     <ClInclude Include="AudioManager.h" />
+    <ClInclude Include="ColliderComponent.h" />
+    <ClInclude Include="CollisionManager.h" />
     <ClInclude Include="Command.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="EP_Engine_PCH.h" />

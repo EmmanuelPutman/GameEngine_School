@@ -67,4 +67,14 @@ void AnimationComponent::Render(const GameTime&)
 	ep::Renderer::GetInstance().RenderTexture(*m_pTexture, m_DestRect, m_SrcRect);
 }
 
+int AnimationComponent::GetFrameWidth() const
+{
+	return m_FrameWidth;
+}
+
+int AnimationComponent::GetFrameHeight() const
+{
+	return m_FrameHeight;
+}
+
 

@@ -8,7 +8,7 @@ namespace ep {
 class BubbleBobble_Game
 {
 public:
-	BubbleBobble_Game();
+	BubbleBobble_Game(const GameTime& gameTime);
 	~BubbleBobble_Game();
 	BubbleBobble_Game(const BubbleBobble_Game&) = delete;
 	BubbleBobble_Game(BubbleBobble_Game&&) = delete;
@@ -18,7 +18,7 @@ public:
 	void Update(const GameTime& gameTime);
 
 private:
-	void Initialize();
+	void Initialize(const GameTime& gameTime);
 
 	ep::Scene* m_pScene;
 

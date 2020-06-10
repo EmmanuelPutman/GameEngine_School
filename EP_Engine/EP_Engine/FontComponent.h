@@ -11,7 +11,7 @@ namespace ep {
 class FontComponent : public ep::Component
 {
 public:
-	FontComponent(const std::string& fontName, unsigned int size, const std::string& text);
+	FontComponent(glm::vec3 pos, const std::string& fontName, unsigned int size, const std::string& text);
 	~FontComponent();
 	
 	void Update(const GameTime& gameTime) override;

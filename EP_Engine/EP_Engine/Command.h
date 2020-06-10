@@ -14,7 +14,7 @@ public:
 	Command& operator= (const Command&) = delete;
 	Command& operator= (const Command&&) = delete;
 
-	virtual void Execute() = 0;
+	virtual void Execute(const GameTime& gameTime) = 0;
 	//const std::string& GetName() const { return m_Name; };
 	//void SetName(const std::string& name) { m_Name = name; };
 

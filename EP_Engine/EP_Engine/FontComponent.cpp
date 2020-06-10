@@ -8,14 +8,15 @@
 #include "Texture2D.h"
 #include "Font.h"
 
-FontComponent::FontComponent(const std::string& fontName, unsigned int size, const std::string& text)
-	:m_PosX{ 0.f }
-	, m_PosY{ 0.f }
+FontComponent::FontComponent(glm::vec3 pos, const std::string& fontName, unsigned int size, const std::string& text)
+	:m_PosX{ pos.x }
+	, m_PosY{ pos.y }
 	, m_Color{ (Uint8)255.f, (Uint8)255.f, (Uint8)255.f, (Uint8)255.f }
-	, m_IsVarChanged{ false }
+	, m_IsVarChanged{ true }
 {
 	m_pFont = ep::ResourceManager::GetInstance().LoadFont(fontName, size);
 	m_Text = text;
+
 
 	TextureCreation();
 }
@@ -28,8 +29,8 @@ FontComponent::~FontComponent()
 
 void FontComponent::Update(const GameTime&)
 {
-	if(m_IsVarChanged)
-	{ 
+	if (m_IsVarChanged)
+	{
 		TextureCreation();
 		m_IsVarChanged = false;
 	}
@@ -38,7 +39,7 @@ void FontComponent::Update(const GameTime&)
 void FontComponent::Render(const GameTime&)
 {
 	if (m_pTexture != nullptr)
-	{ 
+	{
 		ep::Renderer::GetInstance().RenderTexture(*m_pTexture, m_PosX, m_PosY);
 	}
 }
@@ -64,7 +65,7 @@ void FontComponent::SetPosition(float x, float y)
 
 void FontComponent::SetColor(float r, float g, float b, float a)
 {
-	m_Color = {(Uint8)r, (Uint8)g, (Uint8)b, (Uint8)a};
+	m_Color = { (Uint8)r, (Uint8)g, (Uint8)b, (Uint8)a };
 	m_IsVarChanged = true;
 }
 

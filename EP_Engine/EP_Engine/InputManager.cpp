@@ -59,14 +59,14 @@ bool ep::InputManager::ProcessInput()
 	return true;
 }
 
-void ep::InputManager::HandleInput()
+void ep::InputManager::HandleInput(const GameTime& gameTime)
 {
 
 	for (const std::pair<ControllerButton, Command*>& cmd : m_ControllerCommands)
 	{
 		if (IsPressed(cmd.first))
 		{
-			m_ControllerCommands[cmd.first]->Execute();
+			m_ControllerCommands[cmd.first]->Execute(gameTime);
 			return;
 		}
 	}
@@ -76,7 +76,7 @@ void ep::InputManager::HandleInput()
 	{ 
 		if (IsPressed(cmd.first))
 		{ 
-			m_KeyboardCommands[cmd.first]->Execute();
+			m_KeyboardCommands[cmd.first]->Execute(gameTime);
 			return;
 		}
 	}

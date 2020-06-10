@@ -14,5 +14,9 @@ public:
 private:
 	int m_NrOfFrames;
 	FontComponent* m_pFontComponent;
+	bool m_ShouldInitFontPos;
+
+	float m_Timer;
+	int m_FPS;
 };
 

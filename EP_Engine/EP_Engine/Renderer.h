@@ -24,6 +24,8 @@ namespace ep
 		void RenderTexture(const Texture2D& texture, SDL_Rect dst, SDL_Rect src) const;
 		//void RenderTexture(const Texture2D& texture, float x, float y, float width, float height, float sourceW, float sourceH) const;
 
+		void RenderRectangle(const SDL_Rect& shape, const glm::vec3& color) const;
+
 		SDL_Renderer* GetSDLRenderer() const { return m_Renderer; }
 	private:
 		SDL_Renderer* m_Renderer{};

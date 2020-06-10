@@ -27,6 +27,11 @@ inline void SafeDelete(T& pointer)
 
 struct GameTime
 {
+	//Window
+	int WindowWidth;
+	int WindowHeight;
+
+	//Time
 	int FPS;
 	float elapsedSec;
 };

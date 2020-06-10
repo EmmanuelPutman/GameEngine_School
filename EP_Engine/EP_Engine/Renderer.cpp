@@ -54,3 +54,13 @@ void ep::Renderer::RenderTexture(const Texture2D& texture, SDL_Rect dst, SDL_Rec
 {
 	SDL_RenderCopy(GetSDLRenderer(), texture.GetSDLTexture(), &src, &dst);
 }
+
+void ep::Renderer::RenderRectangle(const SDL_Rect& shape, const glm::vec3& color) const
+{
+	SDL_SetRenderDrawColor(GetSDLRenderer(), Uint8(color.x * 255.f), Uint8(color.y * 255.f), Uint8(color.z * 255.f), Uint8(1.f * 255.f));
+	
+	SDL_RenderDrawRect(GetSDLRenderer(), &shape);
+
+	SDL_SetRenderDrawColor(GetSDLRenderer(), 0, 0, 0, 255);
+
+}
