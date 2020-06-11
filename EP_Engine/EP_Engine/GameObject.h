@@ -13,8 +13,10 @@ namespace ep
 		void Update(const GameTime& gameTime) override;
 		void Render(const GameTime& gameTime) const override;
 
-		void SetTexture(const std::string& filename);
-		void SetPosition(float x, float y);
+		int GetWidth() const { return m_Width; };
+		int GetHeight() const { return m_Height; };
+		void SetWidth(int width) { m_Width = width; };
+		void SetHeight(int height) { m_Height = height; };
 
 		template<class T>
 		T* GetComponent();
@@ -28,9 +30,15 @@ namespace ep
 		GameObject& operator=(const GameObject& other) = delete;
 		GameObject& operator=(GameObject&& other) = delete;
 
-	private:
-		Transform m_Transform;
+		const std::string& GetTag() const { return m_Tag; };
+		void SetTag(const std::string& tag) { m_Tag = tag; };
 
+	protected:
+		std::string m_Tag = "";
+		int m_Width = 0;
+		int m_Height = 0;
+
+	private:
 		std::vector<Component*> m_pComponents;
 	};
 

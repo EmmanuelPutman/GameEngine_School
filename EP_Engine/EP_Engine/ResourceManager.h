@@ -11,6 +11,8 @@ namespace ep
 		void Init(const std::string& data);
 		Texture2D* LoadTexture(const std::string& file) const;
 		Font* LoadFont(const std::string& file, unsigned int size) const;
+		std::string GetFullPath(const std::string& fileName) const;
+
 	private:
 		friend class Singleton<ResourceManager>;
 		ResourceManager() = default;

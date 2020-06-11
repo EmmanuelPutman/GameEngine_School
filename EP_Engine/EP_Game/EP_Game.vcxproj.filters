@@ -30,6 +30,12 @@
     <ClCompile Include="BubbleBobble_Game.cpp">
       <Filter>BubbleBobble</Filter>
     </ClCompile>
+    <ClCompile Include="LevelParser_Pyxel.cpp">
+      <Filter>BubbleBobble</Filter>
+    </ClCompile>
+    <ClCompile Include="Character.cpp">
+      <Filter>BubbleBobble</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\EP_Engine\EP_Engine.h">
@@ -38,10 +44,16 @@
     <ClInclude Include="..\EP_Engine\EP_Engine_PCH.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="GameCommands.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="BubbleBobble_Game.h">
+      <Filter>BubbleBobble</Filter>
+    </ClInclude>
+    <ClInclude Include="GameCommands.h">
+      <Filter>BubbleBobble</Filter>
+    </ClInclude>
+    <ClInclude Include="LevelParser_Pyxel.h">
+      <Filter>BubbleBobble</Filter>
+    </ClInclude>
+    <ClInclude Include="Character.h">
       <Filter>BubbleBobble</Filter>
     </ClInclude>
   </ItemGroup>

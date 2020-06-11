@@ -67,7 +67,7 @@ void ep::InputManager::HandleInput(const GameTime& gameTime)
 		if (IsPressed(cmd.first))
 		{
 			m_ControllerCommands[cmd.first]->Execute(gameTime);
-			return;
+			//return;
 		}
 	}
 
@@ -77,7 +77,7 @@ void ep::InputManager::HandleInput(const GameTime& gameTime)
 		if (IsPressed(cmd.first))
 		{ 
 			m_KeyboardCommands[cmd.first]->Execute(gameTime);
-			return;
+			//return;
 		}
 	}
 }

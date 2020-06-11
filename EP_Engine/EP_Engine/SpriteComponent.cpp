@@ -6,6 +6,7 @@
 #include "ResourceManager.h"
 #include "Renderer.h"
 #include <SDL.h>
+#include "GameObject.h"
 
 SpriteComponent::SpriteComponent(const std::string fileName)
 	:m_pTexture{ nullptr }
@@ -25,12 +26,18 @@ SpriteComponent::~SpriteComponent()
 
 void SpriteComponent::Update(const GameTime&)
 {
+	if (m_pGameObject->GetWidth() == 0 && m_pGameObject->GetHeight() == 0)
+	{
+		m_pGameObject->SetWidth(m_Width);
+		m_pGameObject->SetHeight(m_Height);
+	}
 }
 
 void SpriteComponent::Render(const GameTime&)
 {
-	m_PosX = GetTransform()->GetPosition().x;
-	m_PosY = GetTransform()->GetPosition().y;
+	//This is due to the coordinate system (0, 0 : top left corner)
+	m_PosX = GetTransform()->GetPosition().x - m_Width /2;
+	m_PosY = GetTransform()->GetPosition().y - m_Height /2;
 	ep::Renderer::GetInstance().RenderTexture(*m_pTexture, m_PosX, m_PosY);
 }
 

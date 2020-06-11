@@ -24,6 +24,11 @@ ColliderComponent::ColliderComponent(int width, int height, bool isTrigger)
 void ColliderComponent::Update(const GameTime&)
 {
 	m_Position = m_pGameObject->GetComponent<TransformComponent>()->GetPosition();
+
+	//This is due to the coordinate system (0, 0 : top left corner)
+	m_Position.x -= m_Width / 2;
+	m_Position.y -= m_Height / 2;
+
 	m_Shape.x = (int)m_Position.x;
 	m_Shape.y = (int)m_Position.y;
 }

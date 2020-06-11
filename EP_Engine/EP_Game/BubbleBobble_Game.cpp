@@ -9,11 +9,16 @@
 #include "Logger.h"
 
 #include "GameObject.h"
+#include "Character.h"
+
 //#include "TransformComponent.h"
 #include "SpriteComponent.h"
 #include "AnimationComponent.h"
 #include "ColliderComponent.h"
 #include "FpsComponent.h"
+
+
+#include "LevelParser_Pyxel.h"
 
 using namespace ep;
 
@@ -24,15 +29,24 @@ BubbleBobble_Game::BubbleBobble_Game(const GameTime& gameTime)
 
 BubbleBobble_Game::~BubbleBobble_Game()
 {
+	SafeDelete(m_pParser);
 }
 
 void BubbleBobble_Game::Initialize(const GameTime& gameTime)
 {
 	m_pScene = ep::SceneManager::GetInstance().CreateScene("BubbleBobble");
 
+#pragma region LevelParseTest
+
+	m_pParser = new LevelParser_Pyxel("Level_1.txt");
+	CreateLevel();
+
+#pragma endregion
+
+
 	GameObject* pGoFPS = new GameObject();
 	TransformComponent* pFpsTrans = new TransformComponent();
-	pFpsTrans->ChangePositionTo(gameTime.WindowWidth / 2.f - 10.f, gameTime.WindowHeight - 9.f, 0.f);
+	pFpsTrans->ChangePositionTo(gameTime.WindowWidth / 2.f - 10.f, + 45.f, 0.f);
 	pGoFPS->AddComponent(pFpsTrans);
 	FpsComponent* pFPS = new FpsComponent("Lingua.otf", 13, "00 FPS");
 	pGoFPS->AddComponent(pFPS);
@@ -40,24 +54,14 @@ void BubbleBobble_Game::Initialize(const GameTime& gameTime)
 
 #pragma region CharacterTEST
 
-	character = new GameObject();
-	TransformComponent* pTransform = new TransformComponent();
-	pTransform->ChangePositionTo(300.f, 0.f, 0.f);
-	character->AddComponent(pTransform);
-
-	AnimationComponent* pAnim = new AnimationComponent("CharacterRun.png", 7, 1, 0.09f);
-	character->AddComponent(pAnim);
-
-	ColliderComponent* pCollider = new ColliderComponent(pAnim->GetFrameWidth(), pAnim->GetFrameWidth());
-	character->AddComponent(pCollider);
-
+	character = new Character(55.f);
+	character->GetComponent<TransformComponent>()->ChangePositionTo(300.f, 150.f, 0.f);
 	m_pScene->Add(character);
 
-	InputManager::GetInstance().SetCommandToButton(ep::KeyboardKey::KeyA, new MoveLeftCommand(character));
-	InputManager::GetInstance().SetCommandToButton(ep::KeyboardKey::KeyD, new MoveRightCommand(character));
-
-#pragma endregion
 	
+#pragma endregion
+
+	/*
 #pragma region WallTEST
 
 	GameObject* pWall = new GameObject();
@@ -76,7 +80,9 @@ void BubbleBobble_Game::Initialize(const GameTime& gameTime)
 		if (pOther != nullptr && pOther != pThis)
 		{
 			//Logger::GetInstance().Log("THE WALL GOT HIT!!");
-			pOther->GetComponent<TransformComponent>()->AddToPosition(0.0f, -0.2f, 0.f);
+			//Logger::GetInstance().Log("I dealt DAMAGE");
+			glm::vec3 currPos = pOther->GetComponent<TransformComponent>()->GetPosition();
+			pOther->GetComponent<TransformComponent>()->ChangePositionTo(currPos.x, pThis->GetComponent<TransformComponent>()->GetPosition().y - pOther->GetComponent<AnimationComponent>()->GetFrameHeight(), 0.f);
 		}
 	};
 
@@ -85,11 +91,36 @@ void BubbleBobble_Game::Initialize(const GameTime& gameTime)
 	m_pScene->Add(pWall);
 
 #pragma endregion
+	*/
 
 }
 
-void BubbleBobble_Game::Update(const GameTime& gameTime)
+void BubbleBobble_Game::Update(const GameTime&)
 {
 	ep::CollisionManager::GetInstance().Update();
-	character->GetComponent<TransformComponent>()->AddToPosition(0.f, 9.18f * gameTime.elapsedSec, 0.f);
+}
+
+void BubbleBobble_Game::CreateLevel()
+{
+	for (const std::pair<glm::vec3, int>& block : m_pParser->GetBlocks())
+	{
+		if (block.second != 0)
+		{
+			GameObject* pBlock = new GameObject();
+
+			TransformComponent* pTransform = new TransformComponent();
+			pTransform->ChangePositionTo(block.first.x, block.first.y, block.first.z);
+			pBlock->AddComponent(pTransform);
+			std::string tileName = "tile_" + std::to_string(block.second) + ".png";
+			SpriteComponent* pSprite = new SpriteComponent(tileName);
+			pBlock->AddComponent(pSprite);
+
+			ColliderComponent* pCollision = new ColliderComponent(m_pParser->GetBlockWidth(), m_pParser->GetBlockHeight());
+			pBlock->AddComponent(pCollision);
+
+			pBlock->SetTag("Block");
+
+			m_pScene->Add(pBlock);
+		}
+	}
 }

@@ -6,6 +6,7 @@
 #include "Renderer.h"
 #include <SDL.h>
 #include "TransformComponent.h"
+#include "GameObject.h"
 
 AnimationComponent::AnimationComponent(const std::string fileName, UINT columns, UINT rows, float spriteSwapAfterS)
 	:m_Width{ 0 }
@@ -20,6 +21,7 @@ AnimationComponent::AnimationComponent(const std::string fileName, UINT columns,
 	m_FrameHeight = m_Height / rows;
 	m_SrcRect = { 0, 0, (int)m_FrameWidth, (int)m_FrameHeight };
 	m_DestRect = { 0, 0, (int)m_FrameWidth, (int)m_FrameWidth };
+
 }
 
 AnimationComponent::~AnimationComponent()
@@ -29,11 +31,18 @@ AnimationComponent::~AnimationComponent()
 
 void AnimationComponent::Update(const GameTime& gameTime)
 {
+	if (m_pGameObject->GetWidth() == 0 && m_pGameObject->GetHeight() == 0)
+	{
+		m_pGameObject->SetWidth(m_FrameWidth);
+		m_pGameObject->SetHeight(m_FrameHeight);
+	}
+
 	int pixelOffset = 2; //else he could just have this 1px offset and show a black screen
 
 	glm::vec3 pos = this->GetTransform()->GetPosition();
-	m_DestRect.x = (int)pos.x;
-	m_DestRect.y = (int)pos.y;
+	//This is due to the coordinate system (0, 0 : top left corner)
+	m_DestRect.x = (int)pos.x - m_FrameWidth /2;
+	m_DestRect.y = (int)pos.y - m_FrameHeight /2;
 
 
 	if (m_Timer >= m_SpriteSwapAfter)

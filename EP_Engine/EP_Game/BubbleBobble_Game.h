@@ -5,6 +5,8 @@ namespace ep {
 	class GameObject;
 }
 
+class LevelParser_Pyxel;
+
 class BubbleBobble_Game
 {
 public:
@@ -23,5 +25,9 @@ private:
 	ep::Scene* m_pScene;
 
 	ep::GameObject* character;
+
+	LevelParser_Pyxel* m_pParser;
+
+	void CreateLevel();
 };
 

@@ -45,3 +45,10 @@ ep::Font* ep::ResourceManager::LoadFont(const std::string& file, unsigned int si
 {
 	return new Font(m_DataPath + file, size);
 }
+
+std::string ep::ResourceManager::GetFullPath(const std::string& fileName) const
+{
+	std::string path = m_DataPath + fileName;
+
+	return path;
+}

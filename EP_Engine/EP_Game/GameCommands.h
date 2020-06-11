@@ -4,6 +4,7 @@
 #include "Command.h"
 
 #include "GameObject.h"
+#include "Character.h"
 
 #include "TransformComponent.h"
 
@@ -24,7 +25,7 @@ public:
 	virtual ~EmptyCommand() override = default;
 };
 
-class FireCommand : public Command
+class FireTest : public Command
 {
 public:
 	void Execute(const GameTime&) override
@@ -32,10 +33,10 @@ public:
 		ServiceLocator::GetAudio().PlaySounds((int)Commands::Fire);
 		Logger::GetInstance().Log("Fire");
 	};
-	virtual ~FireCommand() override = default;
+	virtual ~FireTest() override = default;
 };
 
-class DuckCommand : public Command
+class DuckTest : public Command
 {
 public:
 	void Execute(const GameTime&) override
@@ -44,10 +45,10 @@ public:
 		Logger::GetInstance().Log("Duck");
 	};
 
-	~DuckCommand() override = default;
+	~DuckTest() override = default;
 };
 
-class JumpCommand : public Command
+class JumpTest : public Command
 {
 public:
 	void Execute(const GameTime&) override
@@ -56,10 +57,10 @@ public:
 
 		Logger::GetInstance().Log("Jump");
 	};
-	~JumpCommand() override = default;
+	~JumpTest() override = default;
 };
 
-class FartCommand : public Command
+class FartTest : public Command
 {
 public:
 	void Execute(const GameTime&) override
@@ -67,41 +68,53 @@ public:
 		ServiceLocator::GetAudio().PlaySounds((int)Commands::Fart);
 		Logger::GetInstance().Log("Fart");
 	};
-	~FartCommand() override = default;
+	~FartTest() override = default;
 };
 
 class MoveLeftCommand : public Command
 {
 public:
-	MoveLeftCommand(ep::GameObject* pCharacter) : m_pCharacter{ pCharacter } {}
+	MoveLeftCommand(Character* pCharacter) : m_pCharacter{ pCharacter } {}
 
-	void Execute(const GameTime& gameTime) override
+	void Execute(const GameTime&) override
 	{
-		//Logger::GetInstance().Warning("Moving left");
-		glm::vec3 currPos = m_pCharacter->GetComponent<TransformComponent>()->GetPosition();
-
-		currPos.x -= 10.f * gameTime.elapsedSec;
-		m_pCharacter->GetComponent<TransformComponent>()->ChangePositionTo(currPos.x, currPos.y, currPos.z);
+		float xVel = -1.f;
+		m_pCharacter->SetVelocity(true, xVel);
 	}
 
 private:
-	GameObject* m_pCharacter;
+	Character* m_pCharacter;
 };
 
 class MoveRightCommand : public Command
 {
 public:
-	MoveRightCommand(ep::GameObject* pCharacter) : m_pCharacter{ pCharacter } {}
+	MoveRightCommand(Character* pCharacter) : m_pCharacter{ pCharacter } {}
 
-	void Execute(const GameTime& gameTime) override
+	void Execute(const GameTime&) override
 	{
-		//Logger::GetInstance().Warning("Moving left");
-		glm::vec3 currPos = m_pCharacter->GetComponent<TransformComponent>()->GetPosition();
-
-		currPos.x += 10.f * gameTime.elapsedSec;
-		m_pCharacter->GetComponent<TransformComponent>()->ChangePositionTo(currPos.x, currPos.y, currPos.z);
+		float xVel = 1.f;
+		m_pCharacter->SetVelocity(true, xVel);
 	}
 
 private:
-	GameObject* m_pCharacter;
+	Character* m_pCharacter;
+};
+
+class JumpCommand : public Command
+{
+public:
+	JumpCommand(Character* pCharacter) : m_pCharacter{ pCharacter } {}
+
+	void Execute(const GameTime&) override
+	{
+		if (m_pCharacter->GetVelocity().y >= 0.f)
+		{
+			float yVel = -1.f;
+			m_pCharacter->SetVelocity(false, yVel);
+		}
+	}
+
+private:
+	Character* m_pCharacter;
 };

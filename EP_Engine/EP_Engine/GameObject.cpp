@@ -31,11 +31,6 @@ void ep::GameObject::Render(const GameTime& gameTime) const
 	}
 }
 
-void ep::GameObject::SetPosition(float x, float y)
-{
-	m_Transform.SetPosition(x, y, 0.0f);
-}
-
 void ep::GameObject::AddComponent(Component* component)
 {
 	m_pComponents.push_back(component);

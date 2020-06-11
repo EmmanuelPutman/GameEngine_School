@@ -47,6 +47,7 @@ void ep::Renderer::RenderTexture(const Texture2D& texture, const float x, const 
 	dst.y = static_cast<int>(y);
 	dst.w = static_cast<int>(width);
 	dst.h = static_cast<int>(height);
+	
 	SDL_RenderCopy(GetSDLRenderer(), texture.GetSDLTexture(), nullptr, &dst);
 }
 

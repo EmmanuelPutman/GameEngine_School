@@ -33,7 +33,7 @@ void ep::EP_Engine::Initialize()
 	{
 		throw std::runtime_error(std::string("SDL_Init Error: ") + SDL_GetError());
 	}
-
+	
 	m_Window = SDL_CreateWindow(
 		"EP_Game",
 		SDL_WINDOWPOS_UNDEFINED,
@@ -46,7 +46,7 @@ void ep::EP_Engine::Initialize()
 	{
 		throw std::runtime_error(std::string("SDL_CreateWindow Error: ") + SDL_GetError());
 	}
-
+	
 	Renderer::GetInstance().Init(m_Window);
 
 	m_GameTime = GameTime();
@@ -163,9 +163,9 @@ void ep::EP_Engine::Run()
 				m_GameTime.FPS = int(nrOfFrames / elapsed);
 				sceneManager.Update(m_GameTime);
 
-				m_Game->Update(m_GameTime);
-
 				input.HandleInput(m_GameTime);
+
+				m_Game->Update(m_GameTime);
 
 				timeBehind -= MsPerFrame;
 			}
