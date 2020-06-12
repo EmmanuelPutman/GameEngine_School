@@ -16,6 +16,9 @@ public:
 	float GetMoveSpeed() const;
 
 	void SetGrounded(bool isGrounded);
+	bool IsGrounded() const;
+	void SetJumping(bool isJumping);
+	bool IsJumping() const;
 
 	glm::vec3 GetVelocity() const;
 	void SetVelocity(const glm::vec3& newVel);
@@ -26,6 +29,7 @@ private:
 	glm::vec3 m_Velocity;
 	float m_VelYTracking;
 
+	bool m_IsJumping;
 	bool m_IsGrounded;
 	
 };

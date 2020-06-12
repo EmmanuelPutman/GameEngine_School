@@ -17,6 +17,7 @@ public:
 
 	void SetCollisionCallBack(std::function<void(ep::GameObject * pThis, ep::GameObject * pOther)> lambda);
 	void SetTriggerCallBack(std::function<void(ep::GameObject * pThis, ep::GameObject * pOther)> lambda);
+	void SetTriggerExitCallBack(std::function<void(ep::GameObject * pThis, ep::GameObject * POther)> lambda);
 
 private:
 	int m_Width;
@@ -27,10 +28,15 @@ private:
 
 	bool m_IsTrigger;
 	bool m_JustTriggered;
+	bool m_IsInTrigger;
+	bool m_ShouldExit;
+	ep::GameObject* m_pTriggeredGameObject;
 
 	void OnCollision(ep::GameObject* pOtherCollision);
 	void OnTrigger(ep::GameObject* pOtherCollision);
+	void OnTriggerExit();
 
 	std::function<void(ep::GameObject * pThis, ep::GameObject * pOther)> CallBack;
+	std::function<void(ep::GameObject * pThis, ep::GameObject * pOther)> ExitCallBack;
 };
 

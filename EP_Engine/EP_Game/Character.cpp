@@ -19,24 +19,24 @@ Character::Character(float moveSpeed)
 
 	AnimationComponent* pAnim = new AnimationComponent("CharacterRun.png", 7, 1, 0.09f);
 	this->AddComponent(pAnim);
-
+	
 	ColliderComponent* pWidthCollider = new ColliderComponent(pAnim->GetFrameWidth(), pAnim->GetFrameHeight() - 5);
 	this->AddComponent(pWidthCollider);
 
 	auto collisionXCallBack = [](GameObject* pThis, GameObject* pOther)
 	{
-		if (pOther != nullptr && pOther->GetTag() == "Block")
+		if (pOther != pThis && pOther != nullptr && pOther->GetTag() == "Block")
 		{
 			if (static_cast<Character*>(pThis)->GetVelocity().x > 0.f)
 			{
-				Logger::GetInstance().Log("Right side was hit");
+				//Logger::GetInstance().Log("Right side was hit");
 				glm::vec3 pos = pThis->GetComponent<TransformComponent>()->GetPosition();
 				pos.x = pOther->GetComponent<TransformComponent>()->GetPosition().x - pOther->GetWidth()/2 - pThis->GetWidth()/2 - 2;
 				pThis->GetComponent<TransformComponent>()->ChangePositionTo(pos.x, pos.y, pos.z);
 			}
 			else if (static_cast<Character*>(pThis)->GetVelocity().x < 0.f)
 			{
-				Logger::GetInstance().Log("Left side was hit");
+				//Logger::GetInstance().Log("Left side was hit");
 				glm::vec3 pos = pThis->GetComponent<TransformComponent>()->GetPosition();
 				pos.x = pOther->GetComponent<TransformComponent>()->GetPosition().x + pOther->GetWidth() / 2 + pThis->GetWidth() / 2 +2;
 				pThis->GetComponent<TransformComponent>()->ChangePositionTo(pos.x, pos.y, pos.z);
@@ -51,7 +51,7 @@ Character::Character(float moveSpeed)
 
 	auto collisionYCallBack = [](GameObject* pThis, GameObject* pOther)
 	{
-		if (pOther != nullptr && pOther->GetTag() == "Block")
+		if (pOther != pThis && pOther != nullptr && pOther->GetTag() == "Block")
 		{
 			if (static_cast<Character*>(pThis)->GetVelocity().y > 0.f)
 			{
@@ -70,23 +70,26 @@ Character::Character(float moveSpeed)
 	};
 
 	pHeightCollider->SetCollisionCallBack(collisionYCallBack);
-
-
-	ColliderComponent* pGroundedTrigger = new ColliderComponent(pAnim->GetFrameWidth() - 6, pAnim->GetFrameHeight() +8, true);
+	
+	ColliderComponent* pGroundedTrigger = new ColliderComponent(pAnim->GetFrameWidth() - 6, pAnim->GetFrameHeight() + 8, true);
 	this->AddComponent(pGroundedTrigger);
 
-	auto groundedCallBack = [](GameObject* pThis, GameObject* pOther)
+	auto groundedCallBack = [](GameObject* pThis, GameObject*)
 	{
-		if (pOther != nullptr)
-		{
-			if (static_cast<Character*>(pThis)->GetVelocity().y > 0.f)
-			{
-				static_cast<Character*>(pThis)->SetGrounded(true);
-			}
-		}
+		//Logger::GetInstance().Log("ENTERED a trigger");
+		static_cast<Character*>(pThis)->SetGrounded(true);
 	};
 
 	pGroundedTrigger->SetTriggerCallBack(groundedCallBack);
+
+	auto notgroundedCallBack = [](GameObject* pThis, GameObject*)
+	{
+		//Logger::GetInstance().Log("Exited a trigger");
+		static_cast<Character*>(pThis)->SetGrounded(false);
+	};
+
+	pGroundedTrigger->SetTriggerExitCallBack(notgroundedCallBack);
+
 
 	//Add the controls
 	InputManager::GetInstance().SetCommandToButton(ep::KeyboardKey::KeyA, new MoveLeftCommand(this));
@@ -106,29 +109,33 @@ void Character::Update(const GameTime& gameTime)
 
 	glm::vec3 posAdd{};
 	posAdd.x = m_Velocity.x * m_MoveSpeed * gameTime.elapsedSec;
-	posAdd.y = m_Velocity.y * m_MoveSpeed*2 * gameTime.elapsedSec;
-	if(m_Velocity.y < 0.f)
+	posAdd.y = m_Velocity.y * m_MoveSpeed * gameTime.elapsedSec;
+	if(m_IsJumping)
+	{
+		posAdd.y = m_Velocity.y * m_MoveSpeed*1.75f * gameTime.elapsedSec;
+	}
+
+	if (m_Velocity.y < 0.f)
 		m_VelYTracking -= posAdd.y;
 
 	GetComponent<TransformComponent>()->AddToPosition(posAdd.x, posAdd.y, posAdd.z);
 
-	if(m_Velocity.x != 0.f)
+	if (m_Velocity.x != 0.f)
 		m_Velocity.x = 0.f;
 
 	if (m_VelYTracking > 90.f && m_Velocity.y < 0.f)
 	{
+		m_IsJumping = false;
 		m_Velocity.y = 1.f;
 		m_VelYTracking = 0.f;
 	}
 
-	if (m_IsGrounded)
-	{ 
-
-	}
-	else
+	if (!m_IsGrounded)
 	{
-		Logger::GetInstance().Log("FALLING DOWNN");
-		m_Velocity.y = 1.f;
+		if(m_IsJumping == false)
+		{ 
+			m_Velocity.y = 1.f;
+		}
 	}
 
 #pragma endregion
@@ -157,6 +164,21 @@ float Character::GetMoveSpeed() const
 void Character::SetGrounded(bool isGrounded)
 {
 	m_IsGrounded = isGrounded;
+}
+
+bool Character::IsGrounded() const
+{
+	return m_IsGrounded;
+}
+
+void Character::SetJumping(bool isJumping)
+{
+	m_IsJumping = isJumping;
+}
+
+bool Character::IsJumping() const
+{
+	return m_IsJumping;
 }
 
 glm::vec3 Character::GetVelocity() const

@@ -110,8 +110,12 @@ public:
 	{
 		if (m_pCharacter->GetVelocity().y >= 0.f)
 		{
-			float yVel = -1.f;
-			m_pCharacter->SetVelocity(false, yVel);
+			if (m_pCharacter->IsGrounded())
+			{
+				float yVel = -1.f;
+				m_pCharacter->SetVelocity(false, yVel);
+				m_pCharacter->SetJumping(true);
+			}
 		}
 	}
 
