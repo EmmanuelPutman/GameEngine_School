@@ -178,7 +178,9 @@
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">EP_Engine_PCH.h</PrecompiledHeaderFile>
     </ClCompile>
     <ClCompile Include="..\EP_Engine\Main.cpp" />
+    <ClCompile Include="Bubble.cpp" />
     <ClCompile Include="BubbleBobble_Game.cpp" />
+    <ClCompile Include="BubbleSpawner.cpp" />
     <ClCompile Include="Character.cpp" />
     <ClCompile Include="LevelParser_Pyxel.cpp" />
   </ItemGroup>
@@ -190,7 +192,9 @@
   <ItemGroup>
     <ClInclude Include="..\EP_Engine\EP_Engine.h" />
     <ClInclude Include="..\EP_Engine\EP_Engine_PCH.h" />
+    <ClInclude Include="Bubble.h" />
     <ClInclude Include="BubbleBobble_Game.h" />
+    <ClInclude Include="BubbleSpawner.h" />
     <ClInclude Include="Character.h" />
     <ClInclude Include="GameCommands.h" />
     <ClInclude Include="LevelParser_Pyxel.h" />

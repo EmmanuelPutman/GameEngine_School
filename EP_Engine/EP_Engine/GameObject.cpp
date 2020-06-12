@@ -23,8 +23,6 @@ void ep::GameObject::Update(const GameTime& gameTime)
 
 void ep::GameObject::Render(const GameTime& gameTime) const
 {
-	//const auto pos = m_Transform.GetPosition();
-	//Renderer::GetInstance().RenderTexture(*m_Texture, pos.x, pos.y);
 	for (auto component : m_pComponents)
 	{
 		component->Render(gameTime);

@@ -19,6 +19,8 @@ public:
 	int GetFrameWidth() const;
 	int GetFrameHeight() const;
 
+	void SetTexture(const std::string& fileName, int columns, int rows, float frameSwapAfterS);
+
 private:
 	float m_SpriteSwapAfter;
 	float m_Timer;

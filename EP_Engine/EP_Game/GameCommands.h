@@ -5,6 +5,7 @@
 
 #include "GameObject.h"
 #include "Character.h"
+#include "BubbleSpawner.h"
 
 #include "TransformComponent.h"
 
@@ -80,6 +81,7 @@ public:
 	{
 		float xVel = -1.f;
 		m_pCharacter->SetVelocity(true, xVel);
+		m_pCharacter->SetLookDirection(-1);
 	}
 
 private:
@@ -95,6 +97,7 @@ public:
 	{
 		float xVel = 1.f;
 		m_pCharacter->SetVelocity(true, xVel);
+		m_pCharacter->SetLookDirection(1);
 	}
 
 private:
@@ -121,4 +124,23 @@ public:
 
 private:
 	Character* m_pCharacter;
+};
+
+class ShootCommand : public Command
+{
+public:
+	ShootCommand(Character* pCharacter, BubbleSpawner* pBubbleSpawner) 
+		: m_pCharacter{ pCharacter }
+		, m_pBubbleSpawner{ pBubbleSpawner }
+	{}
+
+	void Execute(const GameTime&) override
+	{
+		m_pCharacter->SetState(Character::State::Attacking);
+		m_pBubbleSpawner->ShootBubble(m_pCharacter->GetLookDirection(), m_pCharacter->GetComponent<TransformComponent>()->GetPosition());
+	}
+
+private:
+	Character* m_pCharacter;
+	BubbleSpawner* m_pBubbleSpawner;
 };

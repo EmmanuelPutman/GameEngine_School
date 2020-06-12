@@ -26,6 +26,12 @@ ColliderComponent::ColliderComponent(int width, int height, bool isTrigger)
 
 void ColliderComponent::Update(const GameTime&)
 {
+	if (m_pGameObject->GetWidth() == 0 && m_pGameObject->GetHeight() == 0)
+	{
+		m_pGameObject->SetWidth(m_Width);
+		m_pGameObject->SetHeight(m_Height);
+	}
+
 	m_Position = m_pGameObject->GetComponent<TransformComponent>()->GetPosition();
 
 	//This is due to the coordinate system (0, 0 : top left corner)
@@ -69,7 +75,7 @@ void ColliderComponent::CheckCollision(ColliderComponent* pOtherCollision)
 
 
 	if (m_JustTriggered == false && pOtherCollision->m_pGameObject == m_pTriggeredGameObject)
-	{ 
+	{
 		m_JustTriggered = true;
 		m_pTriggeredGameObject = nullptr;
 		OnTriggerExit();

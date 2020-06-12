@@ -9,6 +9,7 @@ namespace ep
 		friend ep::Scene* SceneManager::CreateScene(const std::string& name);
 	public:
 		void Add(SceneObject* object);
+		void Remove(SceneObject* pObject);
 
 		void Update(const GameTime& gameTime);
 		void Render(const GameTime& gameTime) const;
@@ -26,6 +27,7 @@ namespace ep
 
 		std::string m_Name;
 		std::vector <SceneObject*> m_Objects{};
+		std::vector<SceneObject*> m_ObjectsToRemove{};
 
 		static unsigned int m_IdCounter; 
 	};

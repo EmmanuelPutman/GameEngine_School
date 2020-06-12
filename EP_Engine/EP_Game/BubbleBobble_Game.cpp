@@ -43,7 +43,8 @@ void BubbleBobble_Game::Initialize(const GameTime& gameTime)
 
 #pragma endregion
 
-
+#pragma region FPS
+	
 	GameObject* pGoFPS = new GameObject();
 	TransformComponent* pFpsTrans = new TransformComponent();
 	pFpsTrans->ChangePositionTo(gameTime.WindowWidth / 2.f - 10.f, + 45.f, 0.f);
@@ -51,6 +52,9 @@ void BubbleBobble_Game::Initialize(const GameTime& gameTime)
 	FpsComponent* pFPS = new FpsComponent("Lingua.otf", 13, "00 FPS");
 	pGoFPS->AddComponent(pFPS);
 	m_pScene->Add(pGoFPS);
+	
+
+#pragma endregion
 
 #pragma region CharacterTEST
 
@@ -58,7 +62,6 @@ void BubbleBobble_Game::Initialize(const GameTime& gameTime)
 	character->GetComponent<TransformComponent>()->ChangePositionTo(300.f, 150.f, 0.f);
 	m_pScene->Add(character);
 
-	
 #pragma endregion
 
 	/*

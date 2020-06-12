@@ -1,3 +1,4 @@
+#include "AnimationComponent.h"
 #include "EP_Engine_PCH.h"
 #include "AnimationComponent.h"
 
@@ -31,11 +32,11 @@ AnimationComponent::~AnimationComponent()
 
 void AnimationComponent::Update(const GameTime& gameTime)
 {
-	if (m_pGameObject->GetWidth() == 0 && m_pGameObject->GetHeight() == 0)
-	{
-		m_pGameObject->SetWidth(m_FrameWidth);
-		m_pGameObject->SetHeight(m_FrameHeight);
-	}
+	//if (m_pGameObject->GetWidth() == 0 && m_pGameObject->GetHeight() == 0)
+	//{
+	//	m_pGameObject->SetWidth(m_FrameWidth);
+	//	m_pGameObject->SetHeight(m_FrameHeight);
+	//}
 
 	int pixelOffset = 2; //else he could just have this 1px offset and show a black screen
 
@@ -84,6 +85,22 @@ int AnimationComponent::GetFrameWidth() const
 int AnimationComponent::GetFrameHeight() const
 {
 	return m_FrameHeight;
+}
+
+void AnimationComponent::SetTexture(const std::string& fileName, int columns, int rows, float frameSwapAfterS)
+{
+	SafeDelete(m_pTexture);
+	m_pTexture = ep::ResourceManager::GetInstance().LoadTexture(fileName);
+	SDL_QueryTexture(m_pTexture->GetSDLTexture(), nullptr, nullptr, &m_Width, &m_Height);
+
+	m_SpriteSwapAfter = frameSwapAfterS;
+
+	m_FrameWidth = m_Width / columns;
+	m_FrameHeight = m_Height / rows;
+	m_SrcRect = { 0, 0, (int)m_FrameWidth, (int)m_FrameHeight };
+
+	glm::vec3 pos = this->GetTransform()->GetPosition();
+	m_DestRect = { (int)pos.x - m_FrameWidth/2, (int)pos.y - m_FrameHeight / 2, (int)m_FrameWidth, (int)m_FrameWidth };
 }
 
 

@@ -36,6 +36,12 @@
     <ClCompile Include="Character.cpp">
       <Filter>BubbleBobble</Filter>
     </ClCompile>
+    <ClCompile Include="Bubble.cpp">
+      <Filter>BubbleBobble</Filter>
+    </ClCompile>
+    <ClCompile Include="BubbleSpawner.cpp">
+      <Filter>BubbleBobble</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\EP_Engine\EP_Engine.h">
@@ -54,6 +60,12 @@
       <Filter>BubbleBobble</Filter>
     </ClInclude>
     <ClInclude Include="Character.h">
+      <Filter>BubbleBobble</Filter>
+    </ClInclude>
+    <ClInclude Include="Bubble.h">
+      <Filter>BubbleBobble</Filter>
+    </ClInclude>
+    <ClInclude Include="BubbleSpawner.h">
       <Filter>BubbleBobble</Filter>
     </ClInclude>
   </ItemGroup>

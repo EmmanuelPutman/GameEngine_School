@@ -36,6 +36,7 @@ ep::Texture2D* ep::ResourceManager::LoadTexture(const std::string& file) const
 	auto texture = IMG_LoadTexture(Renderer::GetInstance().GetSDLRenderer(), fullPath.c_str());
 	if (texture == nullptr) 
 	{
+		std::cout << "Failed to load texture\n";
 		throw std::runtime_error(std::string("Failed to load texture: ") + SDL_GetError());
 	}
 	return new Texture2D(texture);

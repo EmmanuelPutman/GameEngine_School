@@ -130,7 +130,7 @@ void ep::EP_Engine::Run()
 	Initialize();
 
 	// tell the resource manager where he can find the game data
-	ResourceManager::GetInstance().Init("../EP_Game/Resources/");
+	ResourceManager::GetInstance().Init("../Resources/");
 
 	LoadGame(); 
 

@@ -26,11 +26,11 @@ SpriteComponent::~SpriteComponent()
 
 void SpriteComponent::Update(const GameTime&)
 {
-	if (m_pGameObject->GetWidth() == 0 && m_pGameObject->GetHeight() == 0)
-	{
-		m_pGameObject->SetWidth(m_Width);
-		m_pGameObject->SetHeight(m_Height);
-	}
+	//if (m_pGameObject->GetWidth() == 0 && m_pGameObject->GetHeight() == 0)
+	//{
+	//	m_pGameObject->SetWidth(m_Width);
+	//	m_pGameObject->SetHeight(m_Height);
+	//}
 }
 
 void SpriteComponent::Render(const GameTime&)
