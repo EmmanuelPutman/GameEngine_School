@@ -6,6 +6,9 @@
 #include "SceneManager.h"
 #include "Scene.h"
 
+#include "CollisionManager.h"
+#include "ColliderComponent.h"
+
 BubbleSpawner::BubbleSpawner()
 	:m_Timer{ 0.f }
 	, m_TimeFloating{ 3.f }
@@ -32,11 +35,13 @@ void BubbleSpawner::Update(const GameTime& gameTime)
 	{
 		m_Timer += gameTime.elapsedSec;
 
-		if (m_Timer > m_TimeFloating)
+		if (m_Timer > m_TimeFloating || static_cast<Bubble*>(m_pBubble)->GetShouldBeRemoved())
 		{
 			m_Timer = 0.f;
+			ep::CollisionManager::GetInstance().RemoveCollision(m_pBubble->GetComponent<ColliderComponent>());
 			ep::SceneManager::GetInstance().GetScene()->Remove(m_pBubble);
 			m_pBubble = nullptr;
 		}
+
 	}
 }

@@ -13,7 +13,11 @@ public:
 	void Update(const GameTime& gameTime) override;
 	void Render(const GameTime& gameTime) override;
 
+	void FlagForDelete();
+	bool IsFlaggedForDelete() const;
+
 	void CheckCollision(ColliderComponent* pOtherCollision);
+	void Exit();
 
 	void SetCollisionCallBack(std::function<void(ep::GameObject * pThis, ep::GameObject * pOther)> lambda);
 	void SetTriggerCallBack(std::function<void(ep::GameObject * pThis, ep::GameObject * pOther)> lambda);
@@ -31,6 +35,8 @@ private:
 	bool m_IsInTrigger;
 	bool m_ShouldExit;
 	ep::GameObject* m_pTriggeredGameObject;
+
+	bool m_IsFlaggedForDelete;
 
 	void OnCollision(ep::GameObject* pOtherCollision);
 	void OnTrigger(ep::GameObject* pOtherCollision);

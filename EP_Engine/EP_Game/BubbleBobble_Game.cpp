@@ -17,8 +17,11 @@
 #include "ColliderComponent.h"
 #include "FpsComponent.h"
 
+#include "PlayerCharacter.h"
+#include "Enemy_ZenChan.h"
 
 #include "LevelParser_Pyxel.h"
+#include "EnemyManager.h"
 
 using namespace ep;
 
@@ -30,6 +33,7 @@ BubbleBobble_Game::BubbleBobble_Game(const GameTime& gameTime)
 BubbleBobble_Game::~BubbleBobble_Game()
 {
 	SafeDelete(m_pParser);
+	SafeDelete(m_pEnemySpawner);
 }
 
 void BubbleBobble_Game::Initialize(const GameTime& gameTime)
@@ -47,20 +51,21 @@ void BubbleBobble_Game::Initialize(const GameTime& gameTime)
 	
 	GameObject* pGoFPS = new GameObject();
 	TransformComponent* pFpsTrans = new TransformComponent();
-	pFpsTrans->ChangePositionTo(gameTime.WindowWidth / 2.f - 10.f, + 45.f, 0.f);
+	pFpsTrans->ChangePositionTo(gameTime.WindowWidth / 2.f - 20.f, 15.f, 0.f);
 	pGoFPS->AddComponent(pFpsTrans);
 	FpsComponent* pFPS = new FpsComponent("Lingua.otf", 13, "00 FPS");
 	pGoFPS->AddComponent(pFPS);
 	m_pScene->Add(pGoFPS);
 	
-
 #pragma endregion
 
-#pragma region CharacterTEST
+#pragma region Character
 
-	character = new Character(55.f);
+	character = new PlayerCharacter(55.f);
 	character->GetComponent<TransformComponent>()->ChangePositionTo(300.f, 150.f, 0.f);
 	m_pScene->Add(character);
+
+	m_pEnemySpawner = new EnemyManager();
 
 #pragma endregion
 
@@ -100,6 +105,7 @@ void BubbleBobble_Game::Initialize(const GameTime& gameTime)
 
 void BubbleBobble_Game::Update(const GameTime&)
 {
+	m_pEnemySpawner->Update();
 	ep::CollisionManager::GetInstance().Update();
 }
 

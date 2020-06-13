@@ -10,6 +10,8 @@
 #include "Logger.h"
 #include "CollisionManager.h"
 
+#include "../EP_Game/Bubble.h"
+
 ColliderComponent::ColliderComponent(int width, int height, bool isTrigger)
 	:m_Width{ width }
 	, m_Height{ height }
@@ -44,14 +46,24 @@ void ColliderComponent::Update(const GameTime&)
 
 void ColliderComponent::Render(const GameTime&)
 {
-	ep::Renderer::GetInstance().RenderRectangle(m_Shape, glm::vec3(1.f, 0.f, 0.f));
+	//ep::Renderer::GetInstance().RenderRectangle(m_Shape, glm::vec3(1.f, 0.f, 0.f));
+}
+
+void ColliderComponent::FlagForDelete()
+{
+	m_IsFlaggedForDelete = true;
+}
+
+bool ColliderComponent::IsFlaggedForDelete() const
+{
+	return m_IsFlaggedForDelete;
 }
 
 void ColliderComponent::CheckCollision(ColliderComponent* pOtherCollision)
 {
 	if (pOtherCollision->m_pGameObject == this->m_pGameObject)
 		return;
-
+	
 	if (pOtherCollision->m_Position.x < m_Position.x + m_Width && pOtherCollision->m_Position.x + pOtherCollision->m_Width > m_Position.x)
 		if (pOtherCollision->m_Position.y < m_Position.y + m_Height && pOtherCollision->m_Position.y + pOtherCollision->m_Height > m_Position.y)
 		{
@@ -64,6 +76,13 @@ void ColliderComponent::CheckCollision(ColliderComponent* pOtherCollision)
 			{
 				OnTrigger(pOtherCollision->m_pGameObject);
 			}
+
+			//if(m_pTriggeredGameObject == nullptr)
+			//{ 
+			//	m_JustTriggered = true;
+			//	m_pTriggeredGameObject = nullptr;
+			//	OnTriggerExit();
+			//}
 
 			return;
 		}
@@ -80,6 +99,13 @@ void ColliderComponent::CheckCollision(ColliderComponent* pOtherCollision)
 		m_pTriggeredGameObject = nullptr;
 		OnTriggerExit();
 	}
+}
+
+void ColliderComponent::Exit()
+{
+	m_JustTriggered = true;
+	m_pTriggeredGameObject = nullptr;
+	OnTriggerExit();
 }
 
 

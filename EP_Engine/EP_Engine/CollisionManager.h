@@ -11,11 +11,14 @@ namespace ep
 		~CollisionManager() = default;
 
 		void AddCollision(ColliderComponent* pCollision);
+		void RemoveCollision(ColliderComponent* pCollision);
 
 		void Update();
 
 	private:
 		std::vector<ColliderComponent*> m_pCollisions;
+
+		std::vector<ColliderComponent*> m_pCollisionsToRemove;
 	};
 }
 

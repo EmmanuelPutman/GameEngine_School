@@ -6,6 +6,7 @@ namespace ep {
 }
 
 class LevelParser_Pyxel;
+class EnemyManager;
 
 class BubbleBobble_Game
 {
@@ -27,6 +28,8 @@ private:
 	ep::GameObject* character;
 
 	LevelParser_Pyxel* m_pParser;
+
+	EnemyManager* m_pEnemySpawner;
 
 	void CreateLevel();
 };

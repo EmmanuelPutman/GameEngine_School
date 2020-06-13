@@ -42,6 +42,18 @@
     <ClCompile Include="BubbleSpawner.cpp">
       <Filter>BubbleBobble</Filter>
     </ClCompile>
+    <ClCompile Include="HealthComponent.cpp">
+      <Filter>BubbleBobble</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerCharacter.cpp">
+      <Filter>BubbleBobble</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy_ZenChan.cpp">
+      <Filter>BubbleBobble</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\EP_Engine\EP_Engine.h">
@@ -67,6 +79,18 @@
     </ClInclude>
     <ClInclude Include="BubbleSpawner.h">
       <Filter>BubbleBobble</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerCharacter.h">
+      <Filter>BubbleBobble</Filter>
+    </ClInclude>
+    <ClInclude Include="HealthComponent.h">
+      <Filter>BubbleBobble</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy_ZenChan.h">
+      <Filter>BubbleBobble</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyManager.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

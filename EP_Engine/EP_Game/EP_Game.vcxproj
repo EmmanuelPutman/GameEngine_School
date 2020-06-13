@@ -182,7 +182,11 @@
     <ClCompile Include="BubbleBobble_Game.cpp" />
     <ClCompile Include="BubbleSpawner.cpp" />
     <ClCompile Include="Character.cpp" />
+    <ClCompile Include="EnemyManager.cpp" />
+    <ClCompile Include="Enemy_ZenChan.cpp" />
+    <ClCompile Include="HealthComponent.cpp" />
     <ClCompile Include="LevelParser_Pyxel.cpp" />
+    <ClCompile Include="PlayerCharacter.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\EP_Engine\EP_Engine.vcxproj">
@@ -196,8 +200,12 @@
     <ClInclude Include="BubbleBobble_Game.h" />
     <ClInclude Include="BubbleSpawner.h" />
     <ClInclude Include="Character.h" />
+    <ClInclude Include="EnemyManager.h" />
+    <ClInclude Include="Enemy_ZenChan.h" />
     <ClInclude Include="GameCommands.h" />
+    <ClInclude Include="HealthComponent.h" />
     <ClInclude Include="LevelParser_Pyxel.h" />
+    <ClInclude Include="PlayerCharacter.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

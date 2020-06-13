@@ -21,6 +21,9 @@ namespace ep
 		template<class T>
 		T* GetComponent();
 
+		template<class T>
+		std::vector<T*> GetComponents();
+
 		void AddComponent(Component* component);
 
 		GameObject() = default;
@@ -54,4 +57,16 @@ namespace ep
 		return nullptr;
 	}
 
+	template<class T>
+	inline std::vector<T*> GameObject::GetComponents()
+	{
+		std::vector<T*> components{};
+		for (auto component : m_pComponents)
+		{
+			if (component != nullptr && typeid(*component) == typeid(T))
+				components.push_back(static_cast<T*>(component));
+		}
+
+		return components;
+	}
 }

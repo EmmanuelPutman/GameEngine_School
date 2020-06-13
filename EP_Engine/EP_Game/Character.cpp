@@ -1,104 +1,44 @@
 #include "EP_Engine_PCH.h"
 #include "Character.h"
 
-#include "BubbleSpawner.h"
+#include "Logger.h"
 
-#include "InputManager.h"
-#include "GameCommands.h"
-
-//#include "TransformComponent.h"
+#include "TransformComponent.h"
 #include "AnimationComponent.h"
 #include "ColliderComponent.h"
+#include "HealthComponent.h"
 
-Character::Character(float moveSpeed)
+Character::Character(float moveSpeed, int lives, int damage, const std::string& startAnimName, int animCols, int animRows, float animSwapsAfterS)
 	:m_MoveSpeed{ moveSpeed }
+	, m_Damage{ damage }
 	, m_Velocity{}
 	, m_VelYTracking{ 0.f }
 	, m_IsGrounded{ false }
 	, m_AttackTimer{ 0.f }
-	, m_State{ State::Walking }
+	, m_State{ State::Moving }
 	, m_LookDirection{ -1 }
+	, m_IsJumping{ false }
 {
-	m_pBubbleSpawner = new BubbleSpawner();
-
-
 	//Transform
 	TransformComponent* pTransform = new TransformComponent();
 	this->AddComponent(pTransform);
 
 	//Animation
-	AnimationComponent* pAnim = new AnimationComponent("CharacterRun.png", 7, 1, 0.09f);
+	AnimationComponent* pAnim = new AnimationComponent(startAnimName, animCols, animRows, animSwapsAfterS);
 	this->AddComponent(pAnim);
 	
+	//Add HealthComponent
+	HealthComponent* pHealth = new HealthComponent(lives);
+	this->AddComponent(pHealth);
+
 	//Collision for right and left
-	ColliderComponent* pWidthCollider = new ColliderComponent(pAnim->GetFrameWidth(), pAnim->GetFrameHeight()-6);
-	this->AddComponent(pWidthCollider);
+	m_pWidthCollider = new ColliderComponent(pAnim->GetFrameWidth(), pAnim->GetFrameHeight()-6);
+	this->AddComponent(m_pWidthCollider);
 
-	auto collisionXCallBack = [](GameObject* pThis, GameObject* pOther)
-	{
-		if (static_cast<Character*>(pThis)->IsJumping())
-			return;
-
-		if (pOther != pThis && pOther != nullptr && pOther->GetTag() == "Block")
-		{
-			if (static_cast<Character*>(pThis)->GetVelocity().x > 0.f)
-			{
-				//Logger::GetInstance().Log("Right side was hit");
-				glm::vec3 pos = pThis->GetComponent<TransformComponent>()->GetPosition();
-				pos.x = pOther->GetComponent<TransformComponent>()->GetPosition().x - pOther->GetWidth()/2 - pThis->GetWidth()/2 - 4;
-				if(pos.x > 46.f)
-				{ 
-					pThis->GetComponent<TransformComponent>()->ChangePositionTo(pos.x, pos.y, pos.z);
-				}
-			}
-			else if (static_cast<Character*>(pThis)->GetVelocity().x < 0.f)
-			{
-				//Logger::GetInstance().Log("Left side was hit");
-				glm::vec3 pos = pThis->GetComponent<TransformComponent>()->GetPosition();
-				pos.x = pOther->GetComponent<TransformComponent>()->GetPosition().x + pOther->GetWidth() / 2 + pThis->GetWidth() / 2 +4;
-				if(pos.x < 600.f)
-				{ 
-					pThis->GetComponent<TransformComponent>()->ChangePositionTo(pos.x, pos.y, pos.z);
-				}
-			}
-		}
-	};
-
-	pWidthCollider->SetCollisionCallBack(collisionXCallBack);
 
 	//Collision for top and bottom
-	ColliderComponent* pHeightCollider = new ColliderComponent(pAnim->GetFrameWidth() - 6, pAnim->GetFrameHeight());
-	this->AddComponent(pHeightCollider);
-
-	auto collisionYCallBack = [](GameObject* pThis, GameObject* pOther)
-	{
-		if (static_cast<Character*>(pThis)->IsJumping())
-			return;
-		if (pOther != pThis && pOther != nullptr && pOther->GetTag() == "Block")
-		{
-			if (static_cast<Character*>(pThis)->GetVelocity().y > 0.f)
-			{
-				glm::vec3 pos = pThis->GetComponent<TransformComponent>()->GetPosition();
-				pos.y = pOther->GetComponent<TransformComponent>()->GetPosition().y - pOther->GetHeight() / 2 - pThis->GetHeight()/2 -2;
-				if(pos.y > 40.f)
-				{ 
-					pThis->GetComponent<TransformComponent>()->ChangePositionTo(pos.x, pos.y, pos.z);
-					static_cast<Character*>(pThis)->SetVelocity(false, 0.f);
-				}
-			}
-			else if (static_cast<Character*>(pThis)->GetVelocity().y < 0.f)
-			{
-				glm::vec3 pos = pThis->GetComponent<TransformComponent>()->GetPosition();
-				pos.y = pOther->GetComponent<TransformComponent>()->GetPosition().y + pOther->GetHeight() / 2 + pThis->GetHeight() / 2 + 2;
-				if (pos.y < 440.f)
-				{
-					pThis->GetComponent<TransformComponent>()->ChangePositionTo(pos.x, pos.y, pos.z);
-				}
-			}
-		}
-	};
-
-	pHeightCollider->SetCollisionCallBack(collisionYCallBack);
+	m_pHeightCollider = new ColliderComponent(pAnim->GetFrameWidth() - 4, pAnim->GetFrameHeight());
+	this->AddComponent(m_pHeightCollider);
 	
 	//Trigger to check if grounded
 	ColliderComponent* pGroundedTrigger = new ColliderComponent(pAnim->GetFrameWidth() - 6, pAnim->GetFrameHeight() + 8, true);
@@ -120,40 +60,43 @@ Character::Character(float moveSpeed)
 
 	pGroundedTrigger->SetTriggerExitCallBack(notgroundedCallBack);
 
-
-	//Add the controls
-	InputManager::GetInstance().SetCommandToButton(ep::KeyboardKey::KeyA, new MoveLeftCommand(this));
-	InputManager::GetInstance().SetCommandToButton(ep::KeyboardKey::KeyD, new MoveRightCommand(this));
-	InputManager::GetInstance().SetCommandToButton(ep::KeyboardKey::KeyW, new JumpCommand(this));
-	InputManager::GetInstance().SetCommandToButton(ep::KeyboardKey::KeySpace, new ShootCommand(this, m_pBubbleSpawner));
 }
 
 Character::~Character()
 {
-	SafeDelete(m_pBubbleSpawner);
 }
 
 void Character::Update(const GameTime& gameTime)
 {
 	ep::GameObject::Update(gameTime);
-	m_pBubbleSpawner->Update(gameTime);
 
-#pragma region States
-
-	switch(m_State)
+	if (GetComponent<HealthComponent>()->GetHealth() <= 0)
 	{
-	case State::Attacking:
-		m_AttackTimer += gameTime.elapsedSec;
-
-		if (m_AttackTimer > 2.f)
-			SetState(Character::State::Walking);
-		break;
-	case State::Walking:
-		UpdateMovement(gameTime);
+		ep::Logger::GetInstance().Log("Character DIED.");
 	}
 
-#pragma endregion
+	switch (m_State)
+	{
+	case State::Moving:
+		UpdateMovement(gameTime);
+		break;
 
+	case State::Attacking:
+		UpdateAttacking(gameTime);
+		break;
+
+	case State::Idle:
+		UpdateIdle(gameTime);
+		break;
+
+	case State::TakingDamage:
+		UpdateTakingDamage(gameTime);
+		break;
+
+	case State::Bubbled:
+		UpdateBubbled(gameTime);
+		break;
+	}
 
 }
 
@@ -175,6 +118,11 @@ int Character::GetHeight() const
 float Character::GetMoveSpeed() const
 {
 	return m_MoveSpeed;
+}
+
+int Character::GetDamage() const
+{
+	return m_Damage;
 }
 
 void Character::SetGrounded(bool isGrounded)
@@ -207,6 +155,11 @@ void Character::SetLookDirection(int direction)
 	m_LookDirection = direction;
 }
 
+Character::State Character::GetState() const
+{
+	return m_State;
+}
+
 glm::vec3 Character::GetVelocity() const
 {
 	return m_Velocity;
@@ -231,17 +184,15 @@ void Character::SetVelocity(bool xAxis, float newVel)
 void Character::SetState(State newState)
 {
 	m_AttackTimer = 0.f;
-	switch (newState)
-	{
-	case State::Attacking:
-		m_State = State::Attacking;
-		this->GetComponent<AnimationComponent>()->SetTexture("CharacterAttack.png", 8, 1, 0.25f);
-		break;
 
-	case State::Walking:
-		m_State = State::Walking;
-		this->GetComponent<AnimationComponent>()->SetTexture("CharacterRun.png", 7, 1, 0.09f);
-		break;
+	for (const auto state : m_StateSettings)
+	{
+		if (state.state == newState)
+		{ 
+			m_State = state.state;
+			this->GetComponent<AnimationComponent>()->SetTexture(state.animName, state.columns, state.rows, state.swapFrameAfterS);
+			return;
+		}
 	}
 }
 
@@ -250,6 +201,7 @@ void Character::UpdateMovement(const GameTime& gameTime)
 	glm::vec3 posAdd{};
 	posAdd.x = m_Velocity.x * m_MoveSpeed * gameTime.elapsedSec;
 	posAdd.y = m_Velocity.y * m_MoveSpeed * gameTime.elapsedSec;
+
 	if (m_IsJumping)
 	{
 		posAdd.y = m_Velocity.y * m_MoveSpeed * 1.75f * gameTime.elapsedSec;
@@ -259,9 +211,6 @@ void Character::UpdateMovement(const GameTime& gameTime)
 		m_VelYTracking -= posAdd.y;
 
 	GetComponent<TransformComponent>()->AddToPosition(posAdd.x, posAdd.y, posAdd.z);
-
-	if (m_Velocity.x != 0.f)
-		m_Velocity.x = 0.f;
 
 	if (m_VelYTracking > 90.f && m_Velocity.y < 0.f)
 	{
@@ -277,4 +226,20 @@ void Character::UpdateMovement(const GameTime& gameTime)
 			m_Velocity.y = 1.f;
 		}
 	}
+}
+
+void Character::UpdateAttacking(const GameTime&)
+{
+}
+
+void Character::UpdateIdle(const GameTime&)
+{
+}
+
+void Character::UpdateTakingDamage(const GameTime&)
+{
+}
+
+void Character::UpdateBubbled(const GameTime&)
+{
 }
