@@ -1,3 +1,5 @@
+#include "Scene.h"
+#include "Scene.h"
 #include "EP_Engine_PCH.h"
 #include "Scene.h"
 #include "GameObject.h"
@@ -55,4 +57,11 @@ void ep::Scene::Render(const GameTime& gameTime) const
 		object->Render(gameTime);
 	}
 }
+
+std::vector<ep::SceneObject*> ep::Scene::GetSceneObjects()
+{
+	return m_Objects;
+}
+
+
 

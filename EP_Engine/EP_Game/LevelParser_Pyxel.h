@@ -7,6 +7,10 @@ class LevelParser_Pyxel
 public:
 	LevelParser_Pyxel(const std::string& fileName);
 	~LevelParser_Pyxel() = default;
+	LevelParser_Pyxel(const LevelParser_Pyxel&) = delete;
+	LevelParser_Pyxel(LevelParser_Pyxel&&) = delete;
+	LevelParser_Pyxel& operator= (const LevelParser_Pyxel&) = delete;
+	LevelParser_Pyxel& operator= (const LevelParser_Pyxel&&) = delete;
 
 	int GetBlockWidth() { return m_BlockWidth; };
 	int GetBlockHeight() { return m_BlockHeight; };

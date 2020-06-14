@@ -11,13 +11,19 @@ class AnimationComponent : public ep::Component
 {
 public:
 	AnimationComponent(const std::string fileName, UINT columns, UINT rows, float spriteSwapAfterS);
-	~AnimationComponent();
+	~AnimationComponent() override;
+	AnimationComponent(const AnimationComponent&) = delete;
+	AnimationComponent(AnimationComponent&&) = delete;
+	AnimationComponent& operator= (const AnimationComponent&) = delete;
+	AnimationComponent& operator= (const AnimationComponent&&) = delete;
 
 	void Update(const GameTime& gameTime) override;
 	void Render(const GameTime& gameTime) override;
 
 	int GetFrameWidth() const;
 	int GetFrameHeight() const;
+
+	void SetDirection(int newDirection);
 
 	void SetTexture(const std::string& fileName, int columns, int rows, float frameSwapAfterS);
 
@@ -35,5 +41,7 @@ private:
 
 	SDL_Rect m_SrcRect;
 	SDL_Rect m_DestRect;
+
+	int m_Direction;
 };
 

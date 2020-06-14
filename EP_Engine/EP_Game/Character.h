@@ -27,6 +27,10 @@ public:
 
 	Character(float moveSpeed, int lives, int damage, const std::string& startAnimName, int animCols, int animRows, float animSwapsAfterS);
 	~Character();
+	Character(const Character&) = delete;
+	Character(Character&&) = delete;
+	Character& operator= (const Character&) = delete;
+	Character& operator= (const Character&&) = delete;
 
 	void Update(const GameTime& gameTime) override;
 	void Render(const GameTime& gameTime) const override;

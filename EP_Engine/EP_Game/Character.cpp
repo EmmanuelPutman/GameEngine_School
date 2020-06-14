@@ -52,7 +52,7 @@ Character::Character(float moveSpeed, int lives, int damage, const std::string& 
 
 	pGroundedTrigger->SetTriggerCallBack(groundedCallBack);
 
-	auto notgroundedCallBack = [](GameObject* pThis, GameObject*)
+	auto notgroundedCallBack = [](GameObject* pThis, GameObject* )
 	{
 		//Logger::GetInstance().Log("Exited a trigger");
 		static_cast<Character*>(pThis)->SetGrounded(false);
@@ -69,11 +69,6 @@ Character::~Character()
 void Character::Update(const GameTime& gameTime)
 {
 	ep::GameObject::Update(gameTime);
-
-	if (GetComponent<HealthComponent>()->GetHealth() <= 0)
-	{
-		ep::Logger::GetInstance().Log("Character DIED.");
-	}
 
 	switch (m_State)
 	{
@@ -153,6 +148,7 @@ int Character::GetLookDirection() const
 void Character::SetLookDirection(int direction)
 {
 	m_LookDirection = direction;
+	this->GetComponent<AnimationComponent>()->SetDirection(direction);
 }
 
 Character::State Character::GetState() const

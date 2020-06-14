@@ -8,7 +8,11 @@ class ColliderComponent : public ep::Component
 {
 public:
 	ColliderComponent(int width, int height, bool isTrigger = false);
-	~ColliderComponent() = default;
+	~ColliderComponent() override = default;
+	ColliderComponent(const ColliderComponent&) = delete;
+	ColliderComponent(ColliderComponent&&) = delete;
+	ColliderComponent& operator= (const ColliderComponent&) = delete;
+	ColliderComponent& operator= (const ColliderComponent&&) = delete;
 
 	void Update(const GameTime& gameTime) override;
 	void Render(const GameTime& gameTime) override;

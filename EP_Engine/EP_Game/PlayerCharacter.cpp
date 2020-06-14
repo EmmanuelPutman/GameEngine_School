@@ -43,7 +43,7 @@ PlayerCharacter::PlayerCharacter(float moveSpeed)
 					//Logger::GetInstance().Log("Right side was hit");
 					glm::vec3 pos = pThis->GetComponent<TransformComponent>()->GetPosition();
 					pos.x = pOther->GetComponent<TransformComponent>()->GetPosition().x - pOther->GetWidth() / 2 - pThis->GetWidth() / 2 - 4;
-					if (pos.x > 46.f)
+					if (pos.x > 46.f && pos.y > 100.f)
 					{
 						pThis->GetComponent<TransformComponent>()->ChangePositionTo(pos.x, pos.y, pos.z);
 					}
@@ -53,7 +53,7 @@ PlayerCharacter::PlayerCharacter(float moveSpeed)
 					//Logger::GetInstance().Log("Left side was hit");
 					glm::vec3 pos = pThis->GetComponent<TransformComponent>()->GetPosition();
 					pos.x = pOther->GetComponent<TransformComponent>()->GetPosition().x + pOther->GetWidth() / 2 + pThis->GetWidth() / 2 + 4;
-					if (pos.x < 600.f)
+					if (pos.x < 600.f && pos.y > 100.f)
 					{
 						pThis->GetComponent<TransformComponent>()->ChangePositionTo(pos.x, pos.y, pos.z);
 					}
@@ -81,7 +81,7 @@ PlayerCharacter::PlayerCharacter(float moveSpeed)
 			{
 				glm::vec3 pos = pThis->GetComponent<TransformComponent>()->GetPosition();
 				pos.y = pOther->GetComponent<TransformComponent>()->GetPosition().y - pOther->GetHeight() / 2 - pThis->GetHeight() / 2 - 2;
-				if (pos.y > 40.f)
+				if (pos.y > 90.f)
 				{
 					pThis->GetComponent<TransformComponent>()->ChangePositionTo(pos.x, pos.y, pos.z);
 					static_cast<Character*>(pThis)->SetVelocity(false, 0.f);

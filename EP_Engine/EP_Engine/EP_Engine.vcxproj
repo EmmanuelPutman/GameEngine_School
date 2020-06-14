@@ -198,7 +198,6 @@ xcopy "$(SolutionDir)3rdParty\FMOD\lib\x64\fmodL.dll" "$(OutputPath)" /R /Y</Com
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AnimationComponent.cpp" />
-    <ClCompile Include="ApplicationManager.cpp" />
     <ClCompile Include="Audio.cpp" />
     <ClCompile Include="AudioManager.cpp" />
     <ClCompile Include="ColliderComponent.cpp" />
@@ -227,12 +226,10 @@ xcopy "$(SolutionDir)3rdParty\FMOD\lib\x64\fmodL.dll" "$(OutputPath)" /R /Y</Com
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="Texture2D.cpp" />
-    <ClCompile Include="Transform.cpp" />
     <ClCompile Include="TransformComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AnimationComponent.h" />
-    <ClInclude Include="ApplicationManager.h" />
     <ClInclude Include="Audio.h" />
     <ClInclude Include="AudioManager.h" />
     <ClInclude Include="ColliderComponent.h" />
@@ -254,7 +251,6 @@ xcopy "$(SolutionDir)3rdParty\FMOD\lib\x64\fmodL.dll" "$(OutputPath)" /R /Y</Com
     <ClInclude Include="SceneObject.h" />
     <ClInclude Include="Singleton.h" />
     <ClInclude Include="Texture2D.h" />
-    <ClInclude Include="Transform.h" />
     <ClInclude Include="TransformComponent.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

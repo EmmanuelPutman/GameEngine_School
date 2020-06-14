@@ -51,9 +51,14 @@ void ep::Renderer::RenderTexture(const Texture2D& texture, const float x, const 
 	SDL_RenderCopy(GetSDLRenderer(), texture.GetSDLTexture(), nullptr, &dst);
 }
 
-void ep::Renderer::RenderTexture(const Texture2D& texture, SDL_Rect dst, SDL_Rect src) const
+void ep::Renderer::RenderTexture(const Texture2D& texture, SDL_Rect dst, SDL_Rect src, int direction) 
 {
-	SDL_RenderCopy(GetSDLRenderer(), texture.GetSDLTexture(), &src, &dst);
+	if(direction < 1)
+		SDL_RenderCopy(GetSDLRenderer(), texture.GetSDLTexture(), &src, &dst);
+	else
+	{
+		SDL_RenderCopyEx(GetSDLRenderer(), texture.GetSDLTexture(), &src, &dst, 0.f, nullptr, SDL_FLIP_HORIZONTAL);
+	}
 }
 
 void ep::Renderer::RenderRectangle(const SDL_Rect& shape, const glm::vec3& color) const
@@ -63,5 +68,4 @@ void ep::Renderer::RenderRectangle(const SDL_Rect& shape, const glm::vec3& color
 	SDL_RenderDrawRect(GetSDLRenderer(), &shape);
 
 	SDL_SetRenderDrawColor(GetSDLRenderer(), 0, 0, 0, 255);
-
 }

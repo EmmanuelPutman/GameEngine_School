@@ -11,6 +11,10 @@
 #include "CollisionManager.h"
 
 #include "ColliderComponent.h"
+#include "FruitManager.h"
+#include "Fruit.h"
+#include "Fruit_Watermelon.h"
+#include "Fruit_FrenchFries.h"
 
 EnemyManager::EnemyManager()
 {
@@ -28,12 +32,17 @@ EnemyManager::EnemyManager()
 	pEnemy2->GetComponent<TransformComponent>()->ChangePositionTo(500.f, 150.f, 0.f);
 	ep::SceneManager::GetInstance().GetScene()->Add(pEnemy2);
 	m_pEnemies.push_back(pEnemy2);
+
+	m_StartNrOfEnemies = (int)m_pEnemies.size();
+	m_NrOfEnemiesAlive = m_StartNrOfEnemies;
+
+	//FruitManager
+	m_pFruitManager = new FruitManager();
 }
 
 EnemyManager::~EnemyManager()
 {
-	//for (ep::GameObject* pEnemy : m_pEnemies)
-	//	SafeDelete(pEnemy);
+	SafeDelete(m_pFruitManager);
 }
 
 void EnemyManager::Update()
@@ -66,6 +75,8 @@ void EnemyManager::Update()
 
 	for (ep::GameObject* pEnemy : remove)
 	{
+		m_pFruitManager->AddFruit(new Fruit_Watermelon(pEnemy->GetComponent<TransformComponent>()->GetPosition()));
+		
 		for (ColliderComponent* pCollision : pEnemy->GetComponents<ColliderComponent>())
 		{
 			pCollision->FlagForDelete();
@@ -77,7 +88,23 @@ void EnemyManager::Update()
 
 		pEnemy = nullptr;
 		m_pEnemies.erase(it);
+
+		--m_NrOfEnemiesAlive;
 	}
+
+	m_pFruitManager->Update();
+	m_Score = m_pFruitManager->GetScore();
 }
+
+int EnemyManager::GetEnemiesAlive() const
+{
+	return m_NrOfEnemiesAlive;
+}
+
+int EnemyManager::GetScore() const
+{
+	return m_Score;
+}
+
 
 

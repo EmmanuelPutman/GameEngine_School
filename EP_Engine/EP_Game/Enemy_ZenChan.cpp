@@ -37,7 +37,6 @@ Enemy_ZenChan::Enemy_ZenChan()
 
 	auto rotateCallBack = [](ep::GameObject* pThis, ep::GameObject* pOther)
 	{
-		ep::Logger::GetInstance().Log("COLLIDING");
 		if (static_cast<Character*>(pThis)->IsJumping() || pOther->GetTag() == "Bubble")
 		{ 
 			return;
@@ -47,18 +46,10 @@ Enemy_ZenChan::Enemy_ZenChan()
 		{
 			Character* pCharacter = static_cast<Character*>(pThis);
 
-			if (pOther->GetTag() == "Player" && pCharacter->GetState() == State::Bubbled)
-			{
-				
-
-				return;
-			}
-
 			if (pOther->GetTag() == "Player")
 			{
-				if (pOther->GetComponent<HealthComponent>()->GetHealth() > 0 && static_cast<PlayerCharacter*>(pOther)->IsInvulnerable() == false)
+				if (pOther->GetComponent<HealthComponent>()->GetHealth() > 0 && static_cast<PlayerCharacter*>(pOther)->IsInvulnerable() == false && static_cast<Character*>(pThis)->GetState() != Character::State::Bubbled)
 				{
-					ep::Logger::GetInstance().Log("Damaged");
 					pOther->GetComponent<HealthComponent>()->TakeDamage(pCharacter->GetDamage());
 				}
 			}
@@ -79,7 +70,7 @@ Enemy_ZenChan::Enemy_ZenChan()
 		if (static_cast<Character*>(pThis)->IsJumping())
 			return;
 
-		if (pOther != pThis && pOther != nullptr && pOther->GetTag() == "Block")
+		if (pOther != pThis && pOther != nullptr && pOther->GetTag() == "Block" && pOther->GetTag() != "Fruit")
 		{
 			if (static_cast<Character*>(pThis)->GetVelocity().y > 0.f)
 			{
@@ -131,7 +122,7 @@ void Enemy_ZenChan::UpdateMovement(const GameTime& gameTime)
 		m_FirstTimeGrounded = false;
 		m_Velocity.x = (float)m_LookDirection;
 	}
-
+	
 	if (m_IsGrounded)
 	{
 		m_JumpTimer += gameTime.elapsedSec;

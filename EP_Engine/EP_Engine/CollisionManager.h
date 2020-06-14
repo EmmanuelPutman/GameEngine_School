@@ -9,6 +9,10 @@ namespace ep
 	public:
 		CollisionManager();
 		~CollisionManager() = default;
+		CollisionManager(const CollisionManager&) = delete;
+		CollisionManager(CollisionManager&&) = delete;
+		CollisionManager& operator= (const CollisionManager&) = delete;
+		CollisionManager& operator= (const CollisionManager&&) = delete;
 
 		void AddCollision(ColliderComponent* pCollision);
 		void RemoveCollision(ColliderComponent* pCollision);

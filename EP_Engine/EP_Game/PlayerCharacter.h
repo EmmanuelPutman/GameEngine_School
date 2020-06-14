@@ -7,6 +7,10 @@ class PlayerCharacter :	public Character
 public:
     PlayerCharacter(float moveSpeed);
     ~PlayerCharacter();
+	PlayerCharacter(const PlayerCharacter&) = delete;
+	PlayerCharacter(PlayerCharacter&&) = delete;
+	PlayerCharacter& operator= (const PlayerCharacter&) = delete;
+	PlayerCharacter& operator= (const PlayerCharacter&&) = delete;
     
 	void Update(const GameTime& gameTime) override;
 	void Render(const GameTime& gameTime) const override;

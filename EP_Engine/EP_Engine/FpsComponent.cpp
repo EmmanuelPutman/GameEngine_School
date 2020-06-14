@@ -11,7 +11,7 @@ FpsComponent::FpsComponent(const std::string& fontPath, unsigned int size, const
 	, m_ShouldInitFontPos{ true }
 	, m_Timer{ 0.f }
 {
-	m_pFontComponent = new FontComponent(glm::vec3(0.f, 0.f, 0.f), fontPath, size, text);
+	m_pFontComponent = new FontComponent(fontPath, size, text);
 }
 
 FpsComponent::~FpsComponent()

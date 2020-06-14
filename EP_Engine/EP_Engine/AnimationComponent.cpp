@@ -14,6 +14,7 @@ AnimationComponent::AnimationComponent(const std::string fileName, UINT columns,
 	, m_Height{ 0 }
 	, m_SpriteSwapAfter{ spriteSwapAfterS }
 	, m_Timer{ 0.f }
+	, m_Direction{ -1 }
 {
 	m_pTexture = ep::ResourceManager::GetInstance().LoadTexture(fileName);
 	SDL_QueryTexture(m_pTexture->GetSDLTexture(), nullptr, nullptr, &m_Width, &m_Height);
@@ -74,7 +75,7 @@ void AnimationComponent::Update(const GameTime& gameTime)
 
 void AnimationComponent::Render(const GameTime&)
 {
-	ep::Renderer::GetInstance().RenderTexture(*m_pTexture, m_DestRect, m_SrcRect);
+	ep::Renderer::GetInstance().RenderTexture(*m_pTexture, m_DestRect, m_SrcRect, m_Direction);
 }
 
 int AnimationComponent::GetFrameWidth() const
@@ -85,6 +86,11 @@ int AnimationComponent::GetFrameWidth() const
 int AnimationComponent::GetFrameHeight() const
 {
 	return m_FrameHeight;
+}
+
+void AnimationComponent::SetDirection(int newDirection)
+{
+	m_Direction = newDirection;
 }
 
 void AnimationComponent::SetTexture(const std::string& fileName, int columns, int rows, float frameSwapAfterS)

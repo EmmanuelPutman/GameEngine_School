@@ -11,6 +11,10 @@ class AudioManager : public Singleton<AudioManager>
 public:
 	AudioManager();
 	~AudioManager();
+	AudioManager(const AudioManager&) = delete;
+	AudioManager(AudioManager&&) = delete;
+	AudioManager& operator= (const AudioManager&) = delete;
+	AudioManager& operator= (const AudioManager&&) = delete;
 
 	void AddSound(int index, std::string fileName);
 	void Update();

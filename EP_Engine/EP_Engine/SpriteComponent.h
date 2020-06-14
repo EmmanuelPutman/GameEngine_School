@@ -13,6 +13,10 @@ class SpriteComponent :	public ep::Component
 public:
 	SpriteComponent(const std::string fileName);
 	~SpriteComponent() override;
+	SpriteComponent(const SpriteComponent&) = delete;
+	SpriteComponent(SpriteComponent&&) = delete;
+	SpriteComponent& operator= (const SpriteComponent&) = delete;
+	SpriteComponent& operator= (const SpriteComponent&&) = delete;
 
 	void Update(const GameTime& gameTime) override;
 	void Render(const GameTime& gameTime) override;

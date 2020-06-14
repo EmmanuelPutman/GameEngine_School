@@ -56,64 +56,6 @@ void ep::EP_Engine::Initialize()
 
 void ep::EP_Engine::LoadGame()
 {
-	/*
-	auto scene = SceneManager::GetInstance().CreateScene("Test");
-	GameObject* gameObject = new GameObject();
-	//Transformcomponent
-	TransformComponent* transform = new TransformComponent();
-	transform->ChangePositionTo(0.f, 0.f, 0.f);
-	gameObject->AddComponent(transform);
-	//RenderComponent
-	RenderComponent* render = new RenderComponent();
-	render->SetTexture("background.jpg");
-	render->SetPosition(transform->GetPosition().x, transform->GetPosition().y);
-	gameObject->AddComponent(render);
-	//GameObject
-	scene->Add(gameObject);
-	
-
-	gameObject = new GameObject();
-	//TransformComponent 2nd image
-	transform = new TransformComponent();
-	transform->ChangePositionTo(216.f, 180.f, 0.f);
-	gameObject->AddComponent(transform);
-	//RenderComponent 2nd image
-	render = new RenderComponent();
-	render->SetTexture("logo.png");
-	render->SetPosition(transform->GetPosition().x, transform->GetPosition().y);
-	gameObject->AddComponent(render);
-	//adding a 2nd gameobject
-	scene->Add(gameObject);
-
-
-	gameObject = new GameObject();
-	//TransformComponent text1
-	transform = new TransformComponent();
-	transform->ChangePositionTo(80.f, 20.f, 0.f);
-	gameObject->AddComponent(transform);
-	//FontComponent text1
-	FontComponent* font = new FontComponent("Lingua.otf", 36, "Programming 4 assignment");
-	//font->SetFont("Lingua.otf", 36);
-	//font->SetText("Programming 4 assignment");
-	font->SetColor(255.f, 255.f, 255.f, 255.f);
-	font->SetPosition(transform->GetPosition().x, transform->GetPosition().y);
-	gameObject->AddComponent(font);
-	//GameObject adding text1
-	scene->Add(gameObject);
-
-	gameObject = new GameObject();
-	//TransformComponent text1
-	transform = new TransformComponent();
-	transform->ChangePositionTo(0.f, 0.f, 0.f);
-	gameObject->AddComponent(transform);
-	//FontComponent text1
-	FpsComponent* fpsComponent = new FpsComponent("Lingua.otf", 26, "00");
-	gameObject->AddComponent(fpsComponent);
-
-	//GameObject adding text1
-	scene->Add(gameObject);
-	*/
-
 	m_Game = new BubbleBobble_Game(m_GameTime);
 }
 
@@ -138,6 +80,9 @@ void ep::EP_Engine::Run()
 		auto& renderer = Renderer::GetInstance();
 		auto& sceneManager = SceneManager::GetInstance();
 		auto& input = InputManager::GetInstance();
+		ServiceLocator serviceLocator;
+		NormalAudio audio{};
+		serviceLocator.RegisterAudioService(&audio);
 
 		bool doContinue = true;
 		auto previousTime = high_resolution_clock::now();
@@ -154,6 +99,8 @@ void ep::EP_Engine::Run()
 			timeBehind += elapsed;
 
 			doContinue = input.ProcessInput();
+
+			AudioManager::GetInstance().Update();
 
 			m_GameTime.elapsedSec = elapsed;
 

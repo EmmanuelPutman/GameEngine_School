@@ -5,32 +5,25 @@
 
 void ep::SceneManager::Update(const GameTime& gameTime)
 {
-	for(auto& scene : m_Scenes)
-	{
-		scene->Update(gameTime);
-	}
+	m_pScene->Update(gameTime);
+	
 }
 
 void ep::SceneManager::Render(const GameTime& gameTime)
 {
-	for (const auto& scene : m_Scenes)
-	{
-		scene->Render(gameTime);
-	}
+	m_pScene->Render(gameTime);
+	
 }
 
 ep::SceneManager::~SceneManager()
 {
-	for (Scene* pScene : m_Scenes)
-	{
-		SafeDelete(pScene);
-	}
+	SafeDelete(m_pScene);
 }
 
 ep::Scene* ep::SceneManager::CreateScene(const std::string& name)
 {
 	auto scene = new Scene(name);
-	m_Scenes.push_back(scene);
+	m_pScene = scene;
 	return scene;
 }
 

@@ -14,7 +14,7 @@ namespace ep
 		void Update(const GameTime& gameTime);
 		void Render(const GameTime& gameTime) const;
 
-		SceneObject* GetSceneObject();
+		std::vector<SceneObject*> GetSceneObjects();
 
 		~Scene();
 		Scene(const Scene& other) = delete;

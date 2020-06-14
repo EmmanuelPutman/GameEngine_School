@@ -1,6 +1,5 @@
 #include "EP_Engine_PCH.h"
 #include "FontComponent.h"
-#include "TextObject.h"
 #include "ResourceManager.h"
 #include <SDL_ttf.h>
 #include "Renderer.h"
@@ -8,9 +7,14 @@
 #include "Texture2D.h"
 #include "Font.h"
 
-FontComponent::FontComponent(glm::vec3 pos, const std::string& fontName, unsigned int size, const std::string& text)
-	:m_PosX{ pos.x }
-	, m_PosY{ pos.y }
+#include "GameObject.h"
+#include "TransformComponent.h"
+
+using namespace ep;
+
+FontComponent::FontComponent(const std::string& fontName, unsigned int size, const std::string& text)
+	:m_PosX{ 0.f }
+	, m_PosY{ 0.f }
 	, m_Color{ (Uint8)255.f, (Uint8)255.f, (Uint8)255.f, (Uint8)255.f }
 	, m_IsVarChanged{ true }
 {
@@ -33,6 +37,12 @@ void FontComponent::Update(const GameTime&)
 	{
 		TextureCreation();
 		m_IsVarChanged = false;
+
+		if (m_pGameObject != nullptr)
+		{
+			m_PosX = m_pGameObject->GetComponent<TransformComponent>()->GetPosition().x;
+			m_PosY = m_pGameObject->GetComponent<TransformComponent>()->GetPosition().y;
+		}
 	}
 }
 

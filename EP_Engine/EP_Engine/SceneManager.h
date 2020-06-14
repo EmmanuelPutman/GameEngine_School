@@ -18,9 +18,9 @@ namespace ep
 		void Update(const GameTime& gameTime);
 		void Render(const GameTime& gameTime);
 
-		Scene* GetScene() { return m_Scenes[0]; };
+		Scene* GetScene() { return m_pScene; };
 
 	private:
-		std::vector<Scene*> m_Scenes;
+		Scene* m_pScene;
 	};
 }

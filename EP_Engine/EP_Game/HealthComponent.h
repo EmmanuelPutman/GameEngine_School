@@ -12,6 +12,8 @@ public:
 	void TakeDamage(int damage);
 	int GetHealth() const;
 
+	void Reset();
+
 private:
 	int m_Lives;
 	int m_StartLives;

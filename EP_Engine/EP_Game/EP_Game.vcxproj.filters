@@ -16,6 +16,21 @@
     <Filter Include="BubbleBobble">
       <UniqueIdentifier>{fc1472fc-f0e3-4e63-b331-db701ca9f9ab}</UniqueIdentifier>
     </Filter>
+    <Filter Include="BubbleBobble\Fruit">
+      <UniqueIdentifier>{fa58fed3-4382-414a-8717-d2a1422de8e1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="BubbleBobble\Characters">
+      <UniqueIdentifier>{c3e2f90d-7bd6-402a-b18a-8c965909cac8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="BubbleBobble\Bubble">
+      <UniqueIdentifier>{5928e8ce-0c17-4ea9-8517-d2f0546508d8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="BubbleBobble\Parser">
+      <UniqueIdentifier>{124b9b0f-46ab-441a-9227-34987138a37a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="BubbleBobble\EngineInherited_GameSpecific">
+      <UniqueIdentifier>{0bd78df8-a853-44d3-90b6-9668234e9147}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\EP_Engine\Main.cpp">
@@ -30,29 +45,41 @@
     <ClCompile Include="BubbleBobble_Game.cpp">
       <Filter>BubbleBobble</Filter>
     </ClCompile>
-    <ClCompile Include="LevelParser_Pyxel.cpp">
-      <Filter>BubbleBobble</Filter>
+    <ClCompile Include="Fruit.cpp">
+      <Filter>BubbleBobble\Fruit</Filter>
     </ClCompile>
-    <ClCompile Include="Character.cpp">
-      <Filter>BubbleBobble</Filter>
+    <ClCompile Include="Fruit_FrenchFries.cpp">
+      <Filter>BubbleBobble\Fruit</Filter>
     </ClCompile>
-    <ClCompile Include="Bubble.cpp">
-      <Filter>BubbleBobble</Filter>
+    <ClCompile Include="Fruit_Watermelon.cpp">
+      <Filter>BubbleBobble\Fruit</Filter>
     </ClCompile>
-    <ClCompile Include="BubbleSpawner.cpp">
-      <Filter>BubbleBobble</Filter>
-    </ClCompile>
-    <ClCompile Include="HealthComponent.cpp">
-      <Filter>BubbleBobble</Filter>
-    </ClCompile>
-    <ClCompile Include="PlayerCharacter.cpp">
-      <Filter>BubbleBobble</Filter>
+    <ClCompile Include="FruitManager.cpp">
+      <Filter>BubbleBobble\Fruit</Filter>
     </ClCompile>
     <ClCompile Include="Enemy_ZenChan.cpp">
-      <Filter>BubbleBobble</Filter>
+      <Filter>BubbleBobble\Characters</Filter>
     </ClCompile>
     <ClCompile Include="EnemyManager.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>BubbleBobble\Characters</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerCharacter.cpp">
+      <Filter>BubbleBobble\Characters</Filter>
+    </ClCompile>
+    <ClCompile Include="Character.cpp">
+      <Filter>BubbleBobble\Characters</Filter>
+    </ClCompile>
+    <ClCompile Include="Bubble.cpp">
+      <Filter>BubbleBobble\Bubble</Filter>
+    </ClCompile>
+    <ClCompile Include="BubbleSpawner.cpp">
+      <Filter>BubbleBobble\Bubble</Filter>
+    </ClCompile>
+    <ClCompile Include="LevelParser_Pyxel.cpp">
+      <Filter>BubbleBobble\Parser</Filter>
+    </ClCompile>
+    <ClCompile Include="HealthComponent.cpp">
+      <Filter>BubbleBobble\EngineInherited_GameSpecific</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -65,32 +92,44 @@
     <ClInclude Include="BubbleBobble_Game.h">
       <Filter>BubbleBobble</Filter>
     </ClInclude>
-    <ClInclude Include="GameCommands.h">
-      <Filter>BubbleBobble</Filter>
+    <ClInclude Include="Fruit.h">
+      <Filter>BubbleBobble\Fruit</Filter>
     </ClInclude>
-    <ClInclude Include="LevelParser_Pyxel.h">
-      <Filter>BubbleBobble</Filter>
+    <ClInclude Include="Fruit_FrenchFries.h">
+      <Filter>BubbleBobble\Fruit</Filter>
     </ClInclude>
-    <ClInclude Include="Character.h">
-      <Filter>BubbleBobble</Filter>
+    <ClInclude Include="Fruit_Watermelon.h">
+      <Filter>BubbleBobble\Fruit</Filter>
     </ClInclude>
-    <ClInclude Include="Bubble.h">
-      <Filter>BubbleBobble</Filter>
-    </ClInclude>
-    <ClInclude Include="BubbleSpawner.h">
-      <Filter>BubbleBobble</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayerCharacter.h">
-      <Filter>BubbleBobble</Filter>
-    </ClInclude>
-    <ClInclude Include="HealthComponent.h">
-      <Filter>BubbleBobble</Filter>
-    </ClInclude>
-    <ClInclude Include="Enemy_ZenChan.h">
-      <Filter>BubbleBobble</Filter>
+    <ClInclude Include="FruitManager.h">
+      <Filter>BubbleBobble\Fruit</Filter>
     </ClInclude>
     <ClInclude Include="EnemyManager.h">
-      <Filter>Header Files</Filter>
+      <Filter>BubbleBobble\Characters</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy_ZenChan.h">
+      <Filter>BubbleBobble\Characters</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerCharacter.h">
+      <Filter>BubbleBobble\Characters</Filter>
+    </ClInclude>
+    <ClInclude Include="Character.h">
+      <Filter>BubbleBobble\Characters</Filter>
+    </ClInclude>
+    <ClInclude Include="Bubble.h">
+      <Filter>BubbleBobble\Bubble</Filter>
+    </ClInclude>
+    <ClInclude Include="BubbleSpawner.h">
+      <Filter>BubbleBobble\Bubble</Filter>
+    </ClInclude>
+    <ClInclude Include="LevelParser_Pyxel.h">
+      <Filter>BubbleBobble\Parser</Filter>
+    </ClInclude>
+    <ClInclude Include="GameCommands.h">
+      <Filter>BubbleBobble\EngineInherited_GameSpecific</Filter>
+    </ClInclude>
+    <ClInclude Include="HealthComponent.h">
+      <Filter>BubbleBobble\EngineInherited_GameSpecific</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

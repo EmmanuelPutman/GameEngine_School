@@ -10,6 +10,11 @@ class Audio
 public:
 	Audio() = default;
 	virtual ~Audio() = default;
+	Audio(const Audio&) = delete;
+	Audio(Audio&&) = delete;
+	Audio& operator= (const Audio&) = delete;
+	Audio& operator= (const Audio&&) = delete;
+
 	virtual void PlaySounds(int soundID) = 0;
 	virtual void StopSound(int soundID) = 0;
 	virtual void StopAllSounds() = 0;

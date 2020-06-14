@@ -46,7 +46,7 @@ void ColliderComponent::Update(const GameTime&)
 
 void ColliderComponent::Render(const GameTime&)
 {
-	//ep::Renderer::GetInstance().RenderRectangle(m_Shape, glm::vec3(1.f, 0.f, 0.f));
+	ep::Renderer::GetInstance().RenderRectangle(m_Shape, glm::vec3(1.f, 0.f, 0.f));
 }
 
 void ColliderComponent::FlagForDelete()

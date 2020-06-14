@@ -6,13 +6,18 @@
 namespace ep {
 	class Texture2D;
 	class Font;
+	class GameObject;
 }
 
 class FontComponent : public ep::Component
 {
 public:
-	FontComponent(glm::vec3 pos, const std::string& fontName, unsigned int size, const std::string& text);
-	~FontComponent();
+	FontComponent(const std::string& fontName, unsigned int size, const std::string& text);
+	~FontComponent() override;
+	FontComponent(const FontComponent&) = delete;
+	FontComponent(FontComponent&&) = delete;
+	FontComponent& operator= (const FontComponent&) = delete;
+	FontComponent& operator= (const FontComponent&&) = delete;
 	
 	void Update(const GameTime& gameTime) override;
 	void Render(const GameTime& gameTime) override;

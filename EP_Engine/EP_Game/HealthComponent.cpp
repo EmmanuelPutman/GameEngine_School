@@ -28,3 +28,8 @@ int HealthComponent::GetHealth() const
 {
 	return m_Lives;
 }
+
+void HealthComponent::Reset()
+{	
+	m_Lives = m_StartLives;
+}
